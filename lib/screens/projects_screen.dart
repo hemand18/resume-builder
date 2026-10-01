@@ -26,7 +26,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     final bool isEditing = editIndex != null;
 
     final Project? existingProject =
-        isEditing ? projectsList[editIndex!] : null;
+        isEditing ? projectsList[editIndex] : null;
 
     final nameController = TextEditingController(
       text: existingProject?.name ?? '',
@@ -105,7 +105,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         height: 46,
                         decoration: BoxDecoration(
                           color:
-                              primaryColor.withOpacity(0.1),
+                              primaryColor.withValues(alpha: 0.1),
                           borderRadius:
                               BorderRadius.circular(14),
                         ),
@@ -283,7 +283,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
                         setState(() {
                           if (isEditing) {
-                            projectsList[editIndex!] =
+                            projectsList[editIndex] =
                                 newProject;
                           } else {
                             projectsList.add(newProject);
@@ -418,7 +418,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
+                  color: Colors.red.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -584,7 +584,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               boxShadow: [
                 BoxShadow(
                   color:
-                      Colors.black.withOpacity(0.05),
+                      Colors.black.withValues(alpha: 0.05),
                   blurRadius: 15,
                   offset: const Offset(0, -4),
                 ),
@@ -692,7 +692,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               height: 100,
               decoration: BoxDecoration(
                 color:
-                    primaryColor.withOpacity(0.1),
+                    primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -784,7 +784,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             boxShadow: [
               BoxShadow(
                 color:
-                    Colors.black.withOpacity(0.035),
+                    Colors.black.withValues(alpha: 0.035),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -809,7 +809,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                       height: 50,
                       decoration: BoxDecoration(
                         color:
-                            primaryColor.withOpacity(0.1),
+                            primaryColor.withValues(alpha: 0.1),
                         borderRadius:
                             BorderRadius.circular(14),
                       ),
@@ -958,7 +958,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color: primaryColor.withOpacity(0.07),
+        color: primaryColor.withValues(alpha: 0.07),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(

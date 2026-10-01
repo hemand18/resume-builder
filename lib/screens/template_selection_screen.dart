@@ -108,10 +108,10 @@ class _TemplateSelectionScreenState
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: primaryColor.withOpacity(0.08),
+        color: primaryColor.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: primaryColor.withOpacity(0.10),
+          color: primaryColor.withValues(alpha: 0.10),
         ),
       ),
       child: Row(
@@ -212,8 +212,8 @@ class _TemplateSelectionScreenState
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(
-                isSelected ? 0.07 : 0.025,
+              color: Colors.black.withValues(
+                alpha: isSelected ? 0.07 : 0.025,
               ),
               blurRadius: isSelected ? 14 : 8,
               offset: const Offset(0, 4),
@@ -229,7 +229,7 @@ class _TemplateSelectionScreenState
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? primaryColor.withOpacity(0.07)
+                        ? primaryColor.withValues(alpha: 0.07)
                         : Colors.grey.shade50,
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -271,7 +271,7 @@ class _TemplateSelectionScreenState
                     height: 34,
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? primaryColor.withOpacity(0.10)
+                          ? primaryColor.withValues(alpha: 0.10)
                           : Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -318,7 +318,7 @@ class _TemplateSelectionScreenState
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? primaryColor.withOpacity(0.09)
+                      ? primaryColor.withValues(alpha: 0.09)
                       : Colors.grey.shade50,
                   borderRadius: BorderRadius.circular(9),
                 ),
@@ -354,7 +354,7 @@ class _TemplateSelectionScreenState
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -501,7 +501,7 @@ class _TemplateSelectionScreenState
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 15,
             offset: const Offset(0, -4),
           ),

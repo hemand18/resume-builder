@@ -87,7 +87,7 @@ class ResumePreviewScreen extends StatelessWidget {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 12,
                 offset: const Offset(0, -3),
               ),
@@ -514,7 +514,7 @@ class ResumePreviewScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 18,
             offset: const Offset(0, 6),
           ),
@@ -1299,7 +1299,7 @@ class ResumePreviewScreen extends StatelessWidget {
           personal.name.isEmpty
               ? 'Your Name'
               : personal.name,
-          style: pw.TextStyle(
+          style: const pw.TextStyle(
             fontSize: 26,
             fontWeight: pw.FontWeight.bold,
           ),
@@ -1343,7 +1343,7 @@ class ResumePreviewScreen extends StatelessWidget {
             personal.name.isEmpty
                 ? 'Your Name'
                 : personal.name,
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               color: PdfColors.white,
               fontSize: 25,
               fontWeight: pw.FontWeight.bold,
@@ -1383,7 +1383,7 @@ class ResumePreviewScreen extends StatelessWidget {
             personal.name.isEmpty
                 ? 'YOUR NAME'
                 : personal.name.toUpperCase(),
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               color: PdfColors.white,
               fontSize: 23,
               fontWeight: pw.FontWeight.bold,
@@ -1420,7 +1420,7 @@ class ResumePreviewScreen extends StatelessWidget {
           personal.name.isEmpty
               ? 'Your Name'
               : personal.name,
-          style: pw.TextStyle(
+          style: const pw.TextStyle(
             fontSize: 28,
             fontWeight: pw.FontWeight.normal,
           ),
@@ -1528,7 +1528,7 @@ class ResumePreviewScreen extends StatelessWidget {
         children: [
           pw.Text(
             title,
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               fontSize: 12,
               fontWeight: pw.FontWeight.bold,
             ),
@@ -1575,7 +1575,7 @@ class ResumePreviewScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   education.degree,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 10,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -1615,7 +1615,7 @@ class ResumePreviewScreen extends StatelessWidget {
                 if (education.grade.isNotEmpty)
                   pw.Text(
                     education.grade,
-                    style: pw.TextStyle(
+                    style: const pw.TextStyle(
                       fontSize: 8,
                       fontWeight:
                           pw.FontWeight.bold,
@@ -1671,7 +1671,7 @@ class ResumePreviewScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   experience.jobTitle,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 10,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -1757,7 +1757,7 @@ class ResumePreviewScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   project.name,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 10,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -1771,7 +1771,7 @@ class ResumePreviewScreen extends StatelessWidget {
                     ),
                     child: pw.Text(
                       project.technologies,
-                      style: pw.TextStyle(
+                      style: const pw.TextStyle(
                         fontSize: 8,
                         fontWeight:
                             pw.FontWeight.bold,
@@ -1891,7 +1891,7 @@ class ResumePreviewScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   certification.name,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 9,
                     fontWeight: pw.FontWeight.bold,
                   ),

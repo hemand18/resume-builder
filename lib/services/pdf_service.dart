@@ -119,7 +119,7 @@ class PdfService {
               children: [
                 pw.Text(
                   name,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     color: PdfColors.white,
                     fontSize: 25,
                     fontWeight: pw.FontWeight.bold,
@@ -162,7 +162,7 @@ class PdfService {
               children: [
                 pw.Text(
                   name.toUpperCase(),
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     color: PdfColors.white,
                     fontSize: 23,
                     fontWeight: pw.FontWeight.bold,
@@ -197,7 +197,7 @@ class PdfService {
         children: [
           pw.Text(
             name,
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               fontSize: 27,
               fontWeight: pw.FontWeight.normal,
             ),
@@ -228,7 +228,7 @@ class PdfService {
       children: [
         pw.Text(
           name,
-          style: pw.TextStyle(
+          style: const pw.TextStyle(
             fontSize: 26,
             fontWeight: pw.FontWeight.bold,
           ),
@@ -287,7 +287,7 @@ class PdfService {
       ),
       child: pw.Text(
         title,
-        style: pw.TextStyle(
+        style: const pw.TextStyle(
           fontSize: 12,
           fontWeight: pw.FontWeight.bold,
           letterSpacing: 1,
@@ -330,7 +330,7 @@ class PdfService {
                 children: [
                   pw.Text(
                     education.degree,
-                    style: pw.TextStyle(
+                    style: const pw.TextStyle(
                       fontSize: 10,
                       fontWeight: pw.FontWeight.bold,
                     ),
@@ -425,7 +425,7 @@ class PdfService {
                 children: [
                   pw.Text(
                     experience.jobTitle,
-                    style: pw.TextStyle(
+                    style: const pw.TextStyle(
                       fontSize: 10,
                       fontWeight: pw.FontWeight.bold,
                     ),
@@ -505,7 +505,7 @@ class PdfService {
                 children: [
                   pw.Text(
                     project.name,
-                    style: pw.TextStyle(
+                    style: const pw.TextStyle(
                       fontSize: 10,
                       fontWeight: pw.FontWeight.bold,
                     ),
@@ -514,7 +514,7 @@ class PdfService {
                   if (project.technologies.isNotEmpty)
                     pw.Text(
                       project.technologies,
-                      style: pw.TextStyle(
+                      style: const pw.TextStyle(
                         fontSize: 8,
                         fontWeight: pw.FontWeight.bold,
                       ),
@@ -633,7 +633,7 @@ class PdfService {
                 children: [
                   pw.Text(
                     certification.name,
-                    style: pw.TextStyle(
+                    style: const pw.TextStyle(
                       fontSize: 9,
                       fontWeight: pw.FontWeight.bold,
                     ),

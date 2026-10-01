@@ -34,7 +34,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
     final bool isEditing = editIndex != null;
 
     final Certification? existingCertification =
-        isEditing ? certifications[editIndex!] : null;
+        isEditing ? certifications[editIndex] : null;
 
     final nameController = TextEditingController(
       text: existingCertification?.name ?? '',
@@ -106,7 +106,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                             width: 46,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: primaryColor.withOpacity(0.10),
+                              color: primaryColor.withValues(alpha: 0.10),
                               borderRadius: BorderRadius.circular(14),
                             ),
                             child: const Icon(
@@ -255,7 +255,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
 
                             setState(() {
                               if (isEditing) {
-                                certifications[editIndex!] =
+                                certifications[editIndex] =
                                     certification;
                               } else {
                                 certifications.add(certification);
@@ -458,7 +458,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 15,
             offset: const Offset(0, -4),
           ),
@@ -473,7 +473,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
               style: OutlinedButton.styleFrom(
                 foregroundColor: primaryColor,
                 side: BorderSide(
-                  color: primaryColor.withOpacity(0.35),
+                  color: primaryColor.withValues(alpha: 0.35),
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
@@ -556,7 +556,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.10),
+                color: primaryColor.withValues(alpha: 0.10),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -647,7 +647,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.025),
+                color: Colors.black.withValues(alpha: 0.025),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -663,7 +663,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: primaryColor.withOpacity(0.10),
+                    color: primaryColor.withValues(alpha: 0.10),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Icon(

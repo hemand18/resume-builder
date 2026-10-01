@@ -32,7 +32,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
     final bool isEditing = editIndex != null;
 
     final Experience? existingExperience =
-        isEditing ? experienceList[editIndex!] : null;
+        isEditing ? experienceList[editIndex] : null;
 
     final jobTitleController = TextEditingController(
       text: existingExperience?.jobTitle ?? '',
@@ -112,7 +112,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                 width: 45,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                  color: primaryColor.withOpacity(0.1),
+                                  color: primaryColor.withValues(alpha: 0.1),
                                   borderRadius:
                                       BorderRadius.circular(12),
                                 ),
@@ -318,7 +318,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
                                 setState(() {
                                   if (isEditing) {
-                                    experienceList[editIndex!] =
+                                    experienceList[editIndex] =
                                         experience;
                                   } else {
                                     experienceList.add(experience);
@@ -550,7 +550,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 15,
                   offset: const Offset(0, -4),
                 ),
@@ -651,7 +651,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -744,7 +744,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.03),
+                color: Colors.black.withValues(alpha: 0.03),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -761,7 +761,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: primaryColor.withOpacity(0.1),
+                    color: primaryColor.withValues(alpha: 0.1),
                     borderRadius:
                         BorderRadius.circular(14),
                   ),
@@ -866,7 +866,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.1),
+                            color: Colors.green.withValues(alpha: 0.1),
                             borderRadius:
                                 BorderRadius.circular(20),
                           ),

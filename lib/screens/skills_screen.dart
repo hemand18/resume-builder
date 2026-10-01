@@ -133,7 +133,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: primaryColor.withOpacity(0.1),
+                  color: primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -340,7 +340,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 15,
                   offset: const Offset(0, -4),
                 ),
@@ -447,7 +447,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -544,7 +544,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
+                  color: Colors.black.withValues(alpha: 0.03),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -557,7 +557,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                     color:
-                        primaryColor.withOpacity(0.1),
+                        primaryColor.withValues(alpha: 0.1),
                     borderRadius:
                         BorderRadius.circular(14),
                   ),
@@ -603,7 +603,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                   ),
                   decoration: BoxDecoration(
                     color:
-                        primaryColor.withOpacity(0.1),
+                        primaryColor.withValues(alpha: 0.1),
                     borderRadius:
                         BorderRadius.circular(20),
                   ),
@@ -653,7 +653,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                     boxShadow: [
                       BoxShadow(
                         color:
-                            Colors.black.withOpacity(0.025),
+                            Colors.black.withValues(alpha: 0.025),
                         blurRadius: 6,
                         offset:
                             const Offset(0, 2),
@@ -675,7 +675,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                       height: 24,
                       decoration: BoxDecoration(
                         color:
-                            primaryColor.withOpacity(0.1),
+                            primaryColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -717,12 +717,12 @@ class _SkillsScreenState extends State<SkillsScreen> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color:
-                  Colors.amber.withOpacity(0.08),
+                  Colors.amber.withValues(alpha: 0.08),
               borderRadius:
                   BorderRadius.circular(14),
               border: Border.all(
                 color:
-                    Colors.amber.withOpacity(0.2),
+                    Colors.amber.withValues(alpha: 0.2),
               ),
             ),
             child: Row(

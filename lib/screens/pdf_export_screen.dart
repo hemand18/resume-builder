@@ -131,7 +131,7 @@ class PdfExportScreen extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -145,7 +145,7 @@ class PdfExportScreen extends StatelessWidget {
                 width: 52,
                 height: 52,
                 decoration: BoxDecoration(
-                  color: primaryColor.withOpacity(0.09),
+                  color: primaryColor.withValues(alpha: 0.09),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Icon(
@@ -368,7 +368,7 @@ class PdfExportScreen extends StatelessWidget {
           color: Colors.grey.shade200,
         ),
       ),
-      child: Row(
+      child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
@@ -376,8 +376,8 @@ class PdfExportScreen extends StatelessWidget {
             color: primaryColor,
             size: 21,
           ),
-          const SizedBox(width: 11),
-          const Expanded(
+          SizedBox(width: 11),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -507,7 +507,7 @@ class PdfExportScreen extends StatelessWidget {
               personal.name.isEmpty
                   ? 'Your Name'
                   : personal.name,
-              style: pw.TextStyle(
+              style: const pw.TextStyle(
                 color: PdfColors.white,
                 fontSize: 24,
                 fontWeight: pw.FontWeight.bold,
@@ -544,7 +544,7 @@ class PdfExportScreen extends StatelessWidget {
               personal.name.isEmpty
                   ? 'YOUR NAME'
                   : personal.name.toUpperCase(),
-              style: pw.TextStyle(
+              style: const pw.TextStyle(
                 color: PdfColors.white,
                 fontSize: 23,
                 fontWeight: pw.FontWeight.bold,
@@ -676,7 +676,7 @@ class PdfExportScreen extends StatelessWidget {
         children: [
           pw.Text(
             title,
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               fontSize: 12,
               fontWeight: pw.FontWeight.bold,
             ),
@@ -721,7 +721,7 @@ class PdfExportScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   education.degree,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 10,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -756,7 +756,7 @@ class PdfExportScreen extends StatelessWidget {
                 if (education.grade.isNotEmpty)
                   pw.Text(
                     education.grade,
-                    style: pw.TextStyle(
+                    style: const pw.TextStyle(
                       fontSize: 8,
                       fontWeight: pw.FontWeight.bold,
                     ),
@@ -808,7 +808,7 @@ class PdfExportScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   experience.jobTitle,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 10,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -887,7 +887,7 @@ class PdfExportScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   project.name,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 10,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -899,7 +899,7 @@ class PdfExportScreen extends StatelessWidget {
                     ),
                     child: pw.Text(
                       project.technologies,
-                      style: pw.TextStyle(
+                      style: const pw.TextStyle(
                         fontSize: 8,
                         fontWeight: pw.FontWeight.bold,
                       ),
@@ -1011,7 +1011,7 @@ class PdfExportScreen extends StatelessWidget {
               children: [
                 pw.Text(
                   certification.name,
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 9,
                     fontWeight: pw.FontWeight.bold,
                   ),

@@ -23,7 +23,7 @@ class _EducationScreenState extends State<EducationScreen> {
     final bool isEditing = editIndex != null;
 
     final Education? existingEducation =
-        isEditing ? educationList[editIndex!] : null;
+        isEditing ? educationList[editIndex] : null;
 
     final degreeController = TextEditingController(
       text: existingEducation?.degree ?? '',
@@ -102,7 +102,7 @@ class _EducationScreenState extends State<EducationScreen> {
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: Colors.indigo.withOpacity(0.10),
+                            color: Colors.indigo.withValues(alpha: 0.10),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(
@@ -298,7 +298,7 @@ class _EducationScreenState extends State<EducationScreen> {
 
                           setState(() {
                             if (isEditing) {
-                              educationList[editIndex!] =
+                              educationList[editIndex] =
                                   newEducation;
                             } else {
                               educationList.add(newEducation);
@@ -397,7 +397,7 @@ class _EducationScreenState extends State<EducationScreen> {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: Colors.indigo.withOpacity(0.10),
+                    color: Colors.indigo.withValues(alpha: 0.10),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -456,7 +456,7 @@ class _EducationScreenState extends State<EducationScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 10,
                   offset: const Offset(0, -3),
                 ),
@@ -532,7 +532,7 @@ class _EducationScreenState extends State<EducationScreen> {
               width: 90,
               height: 90,
               decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.08),
+                color: Colors.indigo.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -627,7 +627,7 @@ class _EducationScreenState extends State<EducationScreen> {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.indigo.withOpacity(0.10),
+                  color: Colors.indigo.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(13),
                 ),
                 child: const Icon(
@@ -714,7 +714,7 @@ class _EducationScreenState extends State<EducationScreen> {
                           vertical: 5,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.indigo.withOpacity(0.08),
+                          color: Colors.indigo.withValues(alpha: 0.08),
                           borderRadius:
                               BorderRadius.circular(8),
                         ),
