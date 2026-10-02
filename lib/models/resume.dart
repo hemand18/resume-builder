@@ -1,50 +1,48 @@
 class PersonalInfo {
   String name;
-  String jobTitle;
   String email;
   String phone;
   String location;
   String linkedin;
   String github;
   String website;
+  String jobTitle;
   String summary;
 
   PersonalInfo({
     this.name = '',
-    this.jobTitle = '',
     this.email = '',
     this.phone = '',
     this.location = '',
     this.linkedin = '',
     this.github = '',
     this.website = '',
+    this.jobTitle = '',
     this.summary = '',
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'jobTitle': jobTitle,
-      'email': email,
-      'phone': phone,
-      'location': location,
-      'linkedin': linkedin,
-      'github': github,
-      'website': website,
-      'summary': summary,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'location': location,
+        'linkedin': linkedin,
+        'github': github,
+        'website': website,
+        'jobTitle': jobTitle,
+        'summary': summary,
+      };
 
   factory PersonalInfo.fromJson(Map<String, dynamic> json) {
     return PersonalInfo(
       name: json['name'] ?? '',
-      jobTitle: json['jobTitle'] ?? '',
       email: json['email'] ?? '',
       phone: json['phone'] ?? '',
       location: json['location'] ?? '',
       linkedin: json['linkedin'] ?? '',
       github: json['github'] ?? '',
       website: json['website'] ?? '',
+      jobTitle: json['jobTitle'] ?? '',
       summary: json['summary'] ?? '',
     );
   }
@@ -69,17 +67,15 @@ class Experience {
     this.description = '',
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'jobTitle': jobTitle,
-      'company': company,
-      'location': location,
-      'startDate': startDate,
-      'endDate': endDate,
-      'isCurrent': isCurrent,
-      'description': description,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'jobTitle': jobTitle,
+        'company': company,
+        'location': location,
+        'startDate': startDate,
+        'endDate': endDate,
+        'isCurrent': isCurrent,
+        'description': description,
+      };
 
   factory Experience.fromJson(Map<String, dynamic> json) {
     return Experience(
@@ -113,17 +109,15 @@ class Education {
     this.description = '',
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'degree': degree,
-      'institution': institution,
-      'location': location,
-      'startYear': startYear,
-      'endYear': endYear,
-      'grade': grade,
-      'description': description,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'degree': degree,
+        'institution': institution,
+        'location': location,
+        'startYear': startYear,
+        'endYear': endYear,
+        'grade': grade,
+        'description': description,
+      };
 
   factory Education.fromJson(Map<String, dynamic> json) {
     return Education(
@@ -153,15 +147,13 @@ class Project {
     this.liveUrl = '',
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'technologies': technologies,
-      'description': description,
-      'githubUrl': githubUrl,
-      'liveUrl': liveUrl,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'technologies': technologies,
+        'description': description,
+        'githubUrl': githubUrl,
+        'liveUrl': liveUrl,
+      };
 
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
@@ -189,15 +181,13 @@ class Certification {
     this.url = '',
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'organization': organization,
-      'date': date,
-      'credentialId': credentialId,
-      'url': url,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'organization': organization,
+        'date': date,
+        'credentialId': credentialId,
+        'url': url,
+      };
 
   factory Certification.fromJson(Map<String, dynamic> json) {
     return Certification(
@@ -211,6 +201,12 @@ class Certification {
 }
 
 class Resume {
+  String id;
+  String title;
+  DateTime createdAt;
+  DateTime updatedAt;
+  String templateId;
+
   PersonalInfo personalInfo;
   List<Experience> experience;
   List<Education> education;
@@ -219,33 +215,50 @@ class Resume {
   List<Certification> certifications;
 
   Resume({
+    String? id,
+    this.title = 'My Resume',
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    this.templateId = 'classic',
     PersonalInfo? personalInfo,
     List<Experience>? experience,
     List<Education>? education,
     List<String>? skills,
     List<Project>? projects,
     List<Certification>? certifications,
-  })  : personalInfo = personalInfo ?? PersonalInfo(),
-        experience = experience ?? [],
-        education = education ?? [],
-        skills = skills ?? [],
-        projects = projects ?? [],
-        certifications = certifications ?? [];
+  })  : id = id ?? DateTime.now().microsecondsSinceEpoch.toString(),
+        createdAt = createdAt ?? DateTime.now(),
+        updatedAt = updatedAt ?? DateTime.now(),
+        personalInfo = personalInfo ?? PersonalInfo(),
+        experience = experience ?? <Experience>[],
+        education = education ?? <Education>[],
+        skills = skills ?? <String>[],
+        projects = projects ?? <Project>[],
+        certifications = certifications ?? <Certification>[];
 
-  Map<String, dynamic> toJson() {
-    return {
-      'personalInfo': personalInfo.toJson(),
-      'experience': experience.map((item) => item.toJson()).toList(),
-      'education': education.map((item) => item.toJson()).toList(),
-      'skills': skills,
-      'projects': projects.map((item) => item.toJson()).toList(),
-      'certifications':
-          certifications.map((item) => item.toJson()).toList(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+        'templateId': templateId,
+        'personalInfo': personalInfo.toJson(),
+        'experience': experience.map((item) => item.toJson()).toList(),
+        'education': education.map((item) => item.toJson()).toList(),
+        'skills': skills,
+        'projects': projects.map((item) => item.toJson()).toList(),
+        'certifications': certifications.map((item) => item.toJson()).toList(),
+      };
 
   factory Resume.fromJson(Map<String, dynamic> json) {
     return Resume(
+      id: json['id']?.toString(),
+      title: json['title'] ?? 'My Resume',
+      createdAt: DateTime.tryParse(json['createdAt']?.toString() ?? '') ??
+          DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updatedAt']?.toString() ?? '') ??
+          DateTime.now(),
+      templateId: json['templateId'] ?? 'classic',
       personalInfo: json['personalInfo'] != null
           ? PersonalInfo.fromJson(
               Map<String, dynamic>.from(json['personalInfo']),
@@ -259,7 +272,7 @@ class Resume {
                 ),
               )
               .toList()
-          : [],
+          : <Experience>[],
       education: json['education'] != null
           ? (json['education'] as List)
               .map(
@@ -268,10 +281,10 @@ class Resume {
                 ),
               )
               .toList()
-          : [],
+          : <Education>[],
       skills: json['skills'] != null
           ? List<String>.from(json['skills'])
-          : [],
+          : <String>[],
       projects: json['projects'] != null
           ? (json['projects'] as List)
               .map(
@@ -280,7 +293,7 @@ class Resume {
                 ),
               )
               .toList()
-          : [],
+          : <Project>[],
       certifications: json['certifications'] != null
           ? (json['certifications'] as List)
               .map(
@@ -289,7 +302,7 @@ class Resume {
                 ),
               )
               .toList()
-          : [],
+          : <Certification>[],
     );
   }
 }

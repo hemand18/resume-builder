@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/resume_controller.dart';
 import '../models/resume.dart';
-import '../models/resume_controller.dart';
 import 'template_selection_screen.dart';
 
 class CertificationsScreen extends StatefulWidget {
   const CertificationsScreen({super.key});
 
   @override
-  State<CertificationsScreen> createState() =>
-      _CertificationsScreenState();
+  State<CertificationsScreen> createState() => _CertificationsScreenState();
 }
 
 class _CertificationsScreenState extends State<CertificationsScreen> {
@@ -76,8 +75,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                 left: 22,
                 right: 22,
                 top: 12,
-                bottom:
-                    MediaQuery.of(sheetContext).viewInsets.bottom + 20,
+                bottom: MediaQuery.of(sheetContext).viewInsets.bottom + 20,
               ),
               child: SingleChildScrollView(
                 child: Form(
@@ -114,13 +112,10 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                               color: primaryColor,
                             ),
                           ),
-
                           const SizedBox(width: 14),
-
                           Expanded(
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   isEditing
@@ -145,7 +140,6 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                               ],
                             ),
                           ),
-
                           IconButton(
                             onPressed: () {
                               Navigator.pop(sheetContext);
@@ -167,8 +161,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                         hint: 'e.g. Python Programming Certificate',
                         icon: Icons.workspace_premium_outlined,
                         validator: (value) {
-                          if (value == null ||
-                              value.trim().isEmpty) {
+                          if (value == null || value.trim().isEmpty) {
                             return 'Please enter certification name';
                           }
                           return null;
@@ -184,8 +177,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                         hint: 'e.g. Microsoft, Google, Coursera',
                         icon: Icons.business_outlined,
                         validator: (value) {
-                          if (value == null ||
-                              value.trim().isEmpty) {
+                          if (value == null || value.trim().isEmpty) {
                             return 'Please enter organization';
                           }
                           return null;
@@ -255,12 +247,14 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
 
                             setState(() {
                               if (isEditing) {
-                                certifications[editIndex] =
-                                    certification;
+                                certifications[editIndex] = certification;
                               } else {
                                 certifications.add(certification);
                               }
                             });
+
+                            // AUTOSAVE
+                            ResumeController.instance.scheduleAutosave();
 
                             Navigator.pop(sheetContext);
                           },
@@ -376,6 +370,9 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                   certifications.removeAt(index);
                 });
 
+                // AUTOSAVE
+                ResumeController.instance.scheduleAutosave();
+
                 Navigator.pop(dialogContext);
               },
               child: const Text('Delete'),
@@ -394,12 +391,10 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
         centerTitle: false,
-
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -422,12 +417,10 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
             ),
           ],
         ),
-
         iconTheme: const IconThemeData(
           color: textColor,
         ),
       ),
-
       body: Column(
         children: [
           Expanded(
@@ -435,7 +428,6 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                 ? _buildEmptyState()
                 : _buildCertificationList(),
           ),
-
           _buildBottomButtons(),
         ],
       ),
@@ -508,7 +500,12 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
               ),
               onPressed: certifications.isEmpty
                   ? null
-                  : () {
+                  : () async {
+                      // IMMEDIATE SAVE BEFORE CONTINUING
+                      await ResumeController.instance.saveNow();
+
+                      if (!mounted) return;
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -634,8 +631,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
       ),
       itemCount: certifications.length,
       itemBuilder: (context, index) {
-        final Certification certification =
-            certifications[index];
+        final Certification certification = certifications[index];
 
         return Container(
           margin: const EdgeInsets.only(bottom: 14),
@@ -678,8 +674,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                 // DETAILS
                 Expanded(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         certification.name,
@@ -690,9 +685,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                         ),
                       ),
 
-                      if (certification
-                          .organization
-                          .isNotEmpty) ...[
+                      if (certification.organization.isNotEmpty) ...[
                         const SizedBox(height: 6),
                         Row(
                           children: [
@@ -716,8 +709,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                         ),
                       ],
 
-                      if (certification.date
-                          .isNotEmpty) ...[
+                      if (certification.date.isNotEmpty) ...[
                         const SizedBox(height: 5),
                         Row(
                           children: [
@@ -738,9 +730,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                         ),
                       ],
 
-                      if (certification
-                          .credentialId
-                          .isNotEmpty) ...[
+                      if (certification.credentialId.isNotEmpty) ...[
                         const SizedBox(height: 7),
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -749,8 +739,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                           ),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100,
-                            borderRadius:
-                                BorderRadius.circular(7),
+                            borderRadius: BorderRadius.circular(7),
                           ),
                           child: Text(
                             'ID: ${certification.credentialId}',
@@ -762,8 +751,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                         ),
                       ],
 
-                      if (certification.url
-                          .isNotEmpty) ...[
+                      if (certification.url.isNotEmpty) ...[
                         const SizedBox(height: 7),
                         Row(
                           children: [
@@ -777,8 +765,7 @@ class _CertificationsScreenState extends State<CertificationsScreen> {
                               child: Text(
                                 certification.url,
                                 maxLines: 1,
-                                overflow:
-                                    TextOverflow.ellipsis,
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   color: primaryColor,
                                   fontSize: 12,

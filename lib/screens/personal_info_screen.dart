@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'education_screen.dart';
-import '../models/resume_controller.dart';
+import '../controllers/resume_controller.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({super.key});
@@ -22,22 +22,30 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final summaryController = TextEditingController();
 
   @override
-  void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    locationController.dispose();
-    linkedinController.dispose();
-    githubController.dispose();
-    summaryController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+
+    final personalInfo =
+        ResumeController.instance.resume.personalInfo;
+
+    nameController.text = personalInfo.name;
+    emailController.text = personalInfo.email;
+    phoneController.text = personalInfo.phone;
+    locationController.text = personalInfo.location;
+    linkedinController.text = personalInfo.linkedin;
+    githubController.text = personalInfo.github;
+    summaryController.text = personalInfo.summary;
+
+    nameController.addListener(_onPersonalInfoChanged);
+    emailController.addListener(_onPersonalInfoChanged);
+    phoneController.addListener(_onPersonalInfoChanged);
+    locationController.addListener(_onPersonalInfoChanged);
+    linkedinController.addListener(_onPersonalInfoChanged);
+    githubController.addListener(_onPersonalInfoChanged);
+    summaryController.addListener(_onPersonalInfoChanged);
   }
 
-  void saveAndContinue() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
+  void _updatePersonalInfoModel() {
     final personalInfo =
         ResumeController.instance.resume.personalInfo;
 
@@ -48,6 +56,44 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     personalInfo.linkedin = linkedinController.text.trim();
     personalInfo.github = githubController.text.trim();
     personalInfo.summary = summaryController.text.trim();
+  }
+
+  void _onPersonalInfoChanged() {
+    _updatePersonalInfoModel();
+    ResumeController.instance.scheduleAutosave();
+  }
+
+  @override
+  void dispose() {
+    nameController.removeListener(_onPersonalInfoChanged);
+    emailController.removeListener(_onPersonalInfoChanged);
+    phoneController.removeListener(_onPersonalInfoChanged);
+    locationController.removeListener(_onPersonalInfoChanged);
+    linkedinController.removeListener(_onPersonalInfoChanged);
+    githubController.removeListener(_onPersonalInfoChanged);
+    summaryController.removeListener(_onPersonalInfoChanged);
+
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    locationController.dispose();
+    linkedinController.dispose();
+    githubController.dispose();
+    summaryController.dispose();
+
+    super.dispose();
+  }
+
+  Future<void> saveAndContinue() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _updatePersonalInfoModel();
+
+    await ResumeController.instance.saveNow();
+
+    if (!mounted) return;
 
     Navigator.push(
       context,
@@ -192,7 +238,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         color: Colors.grey.shade600,
                       ),
                     ),
-
                     const SizedBox(height: 18),
 
                     field(
@@ -204,6 +249,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         if (value == null || value.trim().isEmpty) {
                           return 'Please enter your name';
                         }
+
                         return null;
                       },
                     ),
@@ -285,7 +331,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         color: Colors.grey.shade600,
                       ),
                     ),
-
                     const SizedBox(height: 18),
 
                     field(

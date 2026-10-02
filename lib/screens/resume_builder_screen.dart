@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/resume_controller.dart';
+import '../controllers/resume_controller.dart';
 import 'personal_info_screen.dart';
 import 'experience_screen.dart';
 import 'education_screen.dart';
@@ -35,18 +35,14 @@ class ResumeBuilderScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 8),
-
           Text(
             'Complete each section and preview your resume.',
             style: TextStyle(
               color: Colors.grey.shade600,
             ),
           ),
-
           const SizedBox(height: 25),
-
           _buildSection(
             context,
             icon: Icons.person_outline,
@@ -56,7 +52,6 @@ class ResumeBuilderScreen extends StatelessWidget {
                 : resume.personalInfo.name,
             screen: const PersonalInfoScreen(),
           ),
-
           _buildSection(
             context,
             icon: Icons.work_outline,
@@ -66,7 +61,6 @@ class ResumeBuilderScreen extends StatelessWidget {
                 : '${resume.experience.length} experience(s)',
             screen: const ExperienceScreen(),
           ),
-
           _buildSection(
             context,
             icon: Icons.school_outlined,
@@ -76,7 +70,6 @@ class ResumeBuilderScreen extends StatelessWidget {
                 : '${resume.education.length} education record(s)',
             screen: const EducationScreen(),
           ),
-
           _buildSection(
             context,
             icon: Icons.code,
@@ -86,7 +79,6 @@ class ResumeBuilderScreen extends StatelessWidget {
                 : '${resume.skills.length} skill(s)',
             screen: const SkillsScreen(),
           ),
-
           _buildSection(
             context,
             icon: Icons.folder_outlined,
@@ -96,7 +88,6 @@ class ResumeBuilderScreen extends StatelessWidget {
                 : '${resume.projects.length} project(s)',
             screen: const ProjectsScreen(),
           ),
-
           _buildSection(
             context,
             icon: Icons.verified_outlined,
@@ -106,9 +97,7 @@ class ResumeBuilderScreen extends StatelessWidget {
                 : '${resume.certifications.length} certification(s)',
             screen: const CertificationsScreen(),
           ),
-
           const SizedBox(height: 20),
-
           SizedBox(
             height: 55,
             child: ElevatedButton.icon(

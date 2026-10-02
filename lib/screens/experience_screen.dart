@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/resume_controller.dart';
 import '../models/resume.dart';
-import '../models/resume_controller.dart';
+
 import 'skills_screen.dart';
 
 class ExperienceScreen extends StatefulWidget {
@@ -112,7 +113,8 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                 width: 45,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                  color: primaryColor.withValues(alpha: 0.1),
+                                  color:
+                                      primaryColor.withValues(alpha: 0.1),
                                   borderRadius:
                                       BorderRadius.circular(12),
                                 ),
@@ -121,7 +123,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   color: primaryColor,
                                 ),
                               ),
+
                               const SizedBox(width: 12),
+
                               Expanded(
                                 child: Text(
                                   isEditing
@@ -133,6 +137,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   ),
                                 ),
                               ),
+
                               IconButton(
                                 onPressed: () {
                                   Navigator.pop(sheetContext);
@@ -159,6 +164,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   value.trim().isEmpty) {
                                 return 'Please enter a job title';
                               }
+
                               return null;
                             },
                           ),
@@ -176,6 +182,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   value.trim().isEmpty) {
                                 return 'Please enter the company';
                               }
+
                               return null;
                             },
                           ),
@@ -206,11 +213,14 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                         value.trim().isEmpty) {
                                       return 'Required';
                                     }
+
                                     return null;
                                   },
                                 ),
                               ),
+
                               const SizedBox(width: 12),
+
                               Expanded(
                                 child: _buildTextField(
                                   controller: endDateController,
@@ -295,7 +305,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                             width: double.infinity,
                             height: 54,
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (!formKey.currentState!.validate()) {
                                   return;
                                 }
@@ -324,6 +334,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                     experienceList.add(experience);
                                   }
                                 });
+
+                                // Autosave after Add / Update.
+                                ResumeController.instance
+                                    .scheduleAutosave();
 
                                 Navigator.pop(sheetContext);
                               },
@@ -383,9 +397,8 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
         hintText: hint,
         prefixIcon: icon != null ? Icon(icon) : null,
         filled: true,
-        fillColor: enabled
-            ? Colors.grey.shade50
-            : Colors.grey.shade100,
+        fillColor:
+            enabled ? Colors.grey.shade50 : Colors.grey.shade100,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(
@@ -452,6 +465,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                 setState(() {
                   experienceList.removeAt(index);
                 });
+
+                // Autosave after Delete.
+                ResumeController.instance.scheduleAutosave();
 
                 Navigator.pop(dialogContext);
               },
@@ -590,7 +606,13 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                   width: double.infinity,
                   height: 52,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      // Make sure the latest changes are
+                      // persisted before continuing.
+                      await ResumeController.instance.saveNow();
+
+                      if (!context.mounted) return;
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -704,7 +726,8 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                 ),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius:
+                      BorderRadius.circular(14),
                 ),
               ),
             ),
@@ -753,15 +776,15 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
           child: Padding(
             padding: const EdgeInsets.all(18),
             child: Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // ICON
                 Container(
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: primaryColor.withValues(alpha: 0.1),
+                    color:
+                        primaryColor.withValues(alpha: 0.1),
                     borderRadius:
                         BorderRadius.circular(14),
                   ),
@@ -801,6 +824,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
                       if (experience.location.isNotEmpty) ...[
                         const SizedBox(height: 5),
+
                         Row(
                           children: [
                             Icon(
@@ -808,7 +832,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                               size: 15,
                               color: Colors.grey.shade500,
                             ),
+
                             const SizedBox(width: 4),
+
                             Expanded(
                               child: Text(
                                 experience.location,
@@ -832,7 +858,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                             size: 14,
                             color: Colors.grey.shade500,
                           ),
+
                           const SizedBox(width: 5),
+
                           Text(
                             dateText,
                             style: TextStyle(
@@ -845,6 +873,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
                       if (experience.description.isNotEmpty) ...[
                         const SizedBox(height: 12),
+
                         Text(
                           experience.description,
                           maxLines: 3,
@@ -859,6 +888,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
                       if (experience.isCurrent) ...[
                         const SizedBox(height: 10),
+
                         Container(
                           padding:
                               const EdgeInsets.symmetric(
@@ -866,7 +896,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.green.withValues(alpha: 0.1),
+                            color:
+                                Colors.green.withValues(
+                              alpha: 0.1,
+                            ),
                             borderRadius:
                                 BorderRadius.circular(20),
                           ),
@@ -891,8 +924,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                     color: Colors.grey,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   onSelected: (value) {
                     if (value == 'edit') {

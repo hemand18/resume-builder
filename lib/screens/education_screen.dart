@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/resume_controller.dart';
 import '../models/resume.dart';
-import '../models/resume_controller.dart';
 import 'experience_screen.dart';
 
 class EducationScreen extends StatefulWidget {
@@ -72,8 +72,7 @@ class _EducationScreenState extends State<EducationScreen> {
               left: 20,
               right: 20,
               top: 12,
-              bottom:
-                  MediaQuery.of(bottomSheetContext).viewInsets.bottom + 20,
+              bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom + 20,
             ),
             child: SingleChildScrollView(
               child: Form(
@@ -110,21 +109,16 @@ class _EducationScreenState extends State<EducationScreen> {
                             color: Colors.indigo,
                           ),
                         ),
-
                         const SizedBox(width: 12),
-
                         Expanded(
                           child: Text(
-                            isEditing
-                                ? 'Edit Education'
-                                : 'Add Education',
+                            isEditing ? 'Edit Education' : 'Add Education',
                             style: const TextStyle(
                               fontSize: 21,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                         ),
-
                         IconButton(
                           onPressed: () {
                             Navigator.pop(bottomSheetContext);
@@ -141,8 +135,7 @@ class _EducationScreenState extends State<EducationScreen> {
                       controller: degreeController,
                       decoration: const InputDecoration(
                         labelText: 'Degree / Course',
-                        hintText:
-                            'e.g. Bachelor of Computer Applications',
+                        hintText: 'e.g. Bachelor of Computer Applications',
                         prefixIcon: Icon(Icons.school_outlined),
                       ),
                       validator: (value) {
@@ -161,8 +154,7 @@ class _EducationScreenState extends State<EducationScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Institution',
                         hintText: 'e.g. ABC College',
-                        prefixIcon:
-                            Icon(Icons.account_balance_outlined),
+                        prefixIcon: Icon(Icons.account_balance_outlined),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -180,8 +172,7 @@ class _EducationScreenState extends State<EducationScreen> {
                       decoration: const InputDecoration(
                         labelText: 'Location',
                         hintText: 'e.g. Chennai, Tamil Nadu',
-                        prefixIcon:
-                            Icon(Icons.location_on_outlined),
+                        prefixIcon: Icon(Icons.location_on_outlined),
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -203,21 +194,17 @@ class _EducationScreenState extends State<EducationScreen> {
                             decoration: const InputDecoration(
                               labelText: 'Start Year',
                               hintText: '2023',
-                              prefixIcon:
-                                  Icon(Icons.calendar_today_outlined),
+                              prefixIcon: Icon(Icons.calendar_today_outlined),
                             ),
                             validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty) {
+                              if (value == null || value.trim().isEmpty) {
                                 return 'Required';
                               }
                               return null;
                             },
                           ),
                         ),
-
                         const SizedBox(width: 12),
-
                         Expanded(
                           child: TextFormField(
                             controller: endYearController,
@@ -225,12 +212,10 @@ class _EducationScreenState extends State<EducationScreen> {
                             decoration: const InputDecoration(
                               labelText: 'End Year',
                               hintText: '2026',
-                              prefixIcon:
-                                  Icon(Icons.calendar_today_outlined),
+                              prefixIcon: Icon(Icons.calendar_today_outlined),
                             ),
                             validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty) {
+                              if (value == null || value.trim().isEmpty) {
                                 return 'Required';
                               }
                               return null;
@@ -263,8 +248,7 @@ class _EducationScreenState extends State<EducationScreen> {
                         labelText: 'Description',
                         hintText:
                             'Add relevant academic details, achievements, etc.',
-                        prefixIcon:
-                            Icon(Icons.description_outlined),
+                        prefixIcon: Icon(Icons.description_outlined),
                         alignLabelWithHint: true,
                       ),
                     ),
@@ -283,39 +267,30 @@ class _EducationScreenState extends State<EducationScreen> {
 
                           final Education newEducation = Education(
                             degree: degreeController.text.trim(),
-                            institution:
-                                institutionController.text.trim(),
-                            location:
-                                locationController.text.trim(),
-                            startYear:
-                                startYearController.text.trim(),
-                            endYear:
-                                endYearController.text.trim(),
+                            institution: institutionController.text.trim(),
+                            location: locationController.text.trim(),
+                            startYear: startYearController.text.trim(),
+                            endYear: endYearController.text.trim(),
                             grade: gradeController.text.trim(),
-                            description:
-                                descriptionController.text.trim(),
+                            description: descriptionController.text.trim(),
                           );
 
                           setState(() {
                             if (isEditing) {
-                              educationList[editIndex] =
-                                  newEducation;
+                              educationList[editIndex] = newEducation;
                             } else {
                               educationList.add(newEducation);
                             }
                           });
-
+                          ResumeController.instance.scheduleAutosave();
+                          Navigator.pop(bottomSheetContext);
                           Navigator.pop(bottomSheetContext);
                         },
                         icon: Icon(
-                          isEditing
-                              ? Icons.check_rounded
-                              : Icons.add_rounded,
+                          isEditing ? Icons.check_rounded : Icons.add_rounded,
                         ),
                         label: Text(
-                          isEditing
-                              ? 'Update Education'
-                              : 'Add Education',
+                          isEditing ? 'Update Education' : 'Add Education',
                         ),
                       ),
                     ),
@@ -359,7 +334,7 @@ class _EducationScreenState extends State<EducationScreen> {
                 setState(() {
                   educationList.removeAt(index);
                 });
-
+                ResumeController.instance.scheduleAutosave();
                 Navigator.pop(dialogContext);
               },
               child: const Text('Delete'),
@@ -380,7 +355,6 @@ class _EducationScreenState extends State<EducationScreen> {
       appBar: AppBar(
         title: const Text('Education'),
       ),
-
       body: Column(
         children: [
           // Header
@@ -405,13 +379,10 @@ class _EducationScreenState extends State<EducationScreen> {
                     color: Colors.indigo,
                   ),
                 ),
-
                 const SizedBox(width: 12),
-
                 Expanded(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
                         'Your Education',
@@ -480,9 +451,7 @@ class _EducationScreenState extends State<EducationScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 SizedBox(
                   width: double.infinity,
                   height: 52,
@@ -493,8 +462,7 @@ class _EducationScreenState extends State<EducationScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const ExperienceScreen(),
+                                builder: (context) => const ExperienceScreen(),
                               ),
                             );
                           },
@@ -541,9 +509,7 @@ class _EducationScreenState extends State<EducationScreen> {
                 color: Colors.indigo,
               ),
             ),
-
             const SizedBox(height: 22),
-
             const Text(
               'No education added yet',
               textAlign: TextAlign.center,
@@ -552,9 +518,7 @@ class _EducationScreenState extends State<EducationScreen> {
                 fontWeight: FontWeight.w800,
               ),
             ),
-
             const SizedBox(height: 8),
-
             Text(
               'Add your degree, college, location, '
               'academic dates, and grade to continue.',
@@ -565,9 +529,7 @@ class _EducationScreenState extends State<EducationScreen> {
                 height: 1.5,
               ),
             ),
-
             const SizedBox(height: 24),
-
             ElevatedButton.icon(
               onPressed: () {
                 showEducationForm();
@@ -599,10 +561,8 @@ class _EducationScreenState extends State<EducationScreen> {
 
         String dateText = '';
 
-        if (education.startYear.isNotEmpty &&
-            education.endYear.isNotEmpty) {
-          dateText =
-              '${education.startYear} - ${education.endYear}';
+        if (education.startYear.isNotEmpty && education.endYear.isNotEmpty) {
+          dateText = '${education.startYear} - ${education.endYear}';
         } else if (education.startYear.isNotEmpty) {
           dateText = education.startYear;
         } else if (education.endYear.isNotEmpty) {
@@ -641,8 +601,7 @@ class _EducationScreenState extends State<EducationScreen> {
               // Details
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       education.degree,
@@ -651,9 +610,7 @@ class _EducationScreenState extends State<EducationScreen> {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-
                     const SizedBox(height: 5),
-
                     Text(
                       education.institution,
                       style: const TextStyle(
@@ -661,7 +618,6 @@ class _EducationScreenState extends State<EducationScreen> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-
                     if (education.location.isNotEmpty) ...[
                       const SizedBox(height: 6),
                       Row(
@@ -684,7 +640,6 @@ class _EducationScreenState extends State<EducationScreen> {
                         ],
                       ),
                     ],
-
                     if (dateText.isNotEmpty) ...[
                       const SizedBox(height: 6),
                       Row(
@@ -705,7 +660,6 @@ class _EducationScreenState extends State<EducationScreen> {
                         ],
                       ),
                     ],
-
                     if (education.grade.isNotEmpty) ...[
                       const SizedBox(height: 8),
                       Container(
@@ -715,8 +669,7 @@ class _EducationScreenState extends State<EducationScreen> {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.indigo.withValues(alpha: 0.08),
-                          borderRadius:
-                              BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           education.grade,
@@ -728,7 +681,6 @@ class _EducationScreenState extends State<EducationScreen> {
                         ),
                       ),
                     ],
-
                     if (education.description.isNotEmpty) ...[
                       const SizedBox(height: 8),
                       Text(

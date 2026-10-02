@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/resume_controller.dart';
 import 'resume_preview_screen.dart';
 
 class TemplateSelectionScreen extends StatefulWidget {
@@ -13,6 +14,13 @@ class TemplateSelectionScreen extends StatefulWidget {
 class _TemplateSelectionScreenState
     extends State<TemplateSelectionScreen> {
   int selectedTemplate = 0;
+
+  static const List<String> templateIds = [
+    'classic',
+    'modern',
+    'professional',
+    'minimal',
+  ];
 
   static const Color primaryColor = Color(0xFF4F46E5);
   static const Color backgroundColor = Color(0xFFF8F9FC);
@@ -41,6 +49,20 @@ class _TemplateSelectionScreenState
       'icon': Icons.article_outlined,
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    final currentTemplate =
+        ResumeController.instance.resume.templateId;
+
+    final index = templateIds.indexOf(currentTemplate);
+
+    if (index != -1) {
+      selectedTemplate = index;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +125,10 @@ class _TemplateSelectionScreenState
     );
   }
 
+  // ============================================================
+  // HEADER
+  // ============================================================
+
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
@@ -159,6 +185,10 @@ class _TemplateSelectionScreenState
     );
   }
 
+  // ============================================================
+  // TEMPLATE GRID
+  // ============================================================
+
   Widget _buildTemplateGrid() {
     return GridView.builder(
       shrinkWrap: true,
@@ -184,6 +214,10 @@ class _TemplateSelectionScreenState
     );
   }
 
+  // ============================================================
+  // TEMPLATE CARD
+  // ============================================================
+
   Widget _templateCard({
     required int index,
     required String title,
@@ -197,6 +231,12 @@ class _TemplateSelectionScreenState
         setState(() {
           selectedTemplate = index;
         });
+
+        // Persist the selected template for the active resume.
+        ResumeController.instance.resume.templateId =
+            templateIds[index];
+
+        ResumeController.instance.scheduleAutosave();
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -341,6 +381,10 @@ class _TemplateSelectionScreenState
     );
   }
 
+  // ============================================================
+  // RESUME PREVIEW
+  // ============================================================
+
   Widget _buildResumePreview(
     int index,
     bool isSelected,
@@ -428,6 +472,10 @@ class _TemplateSelectionScreenState
     );
   }
 
+  // ============================================================
+  // PREVIEW LINE
+  // ============================================================
+
   Widget _previewLine(double width) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
@@ -441,6 +489,10 @@ class _TemplateSelectionScreenState
       ),
     );
   }
+
+  // ============================================================
+  // SELECTED INFO
+  // ============================================================
 
   Widget _buildSelectedInfo() {
     final String selectedName =
@@ -488,6 +540,10 @@ class _TemplateSelectionScreenState
       ),
     );
   }
+
+  // ============================================================
+  // BOTTOM BUTTON
+  // ============================================================
 
   Widget _buildBottomButton() {
     return Container(

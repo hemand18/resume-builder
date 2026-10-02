@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/resume_controller.dart';
+import '../controllers/resume_controller.dart';
+
 import 'projects_screen.dart';
 
 class SkillsScreen extends StatefulWidget {
@@ -11,11 +12,9 @@ class SkillsScreen extends StatefulWidget {
 }
 
 class _SkillsScreenState extends State<SkillsScreen> {
-  List<String> get skillsList =>
-      ResumeController.instance.resume.skills;
+  List<String> get skillsList => ResumeController.instance.resume.skills;
 
-  final TextEditingController skillController =
-      TextEditingController();
+  final TextEditingController skillController = TextEditingController();
 
   static const Color primaryColor = Color(0xFF4F46E5);
   static const Color backgroundColor = Color(0xFFF8FAFC);
@@ -57,6 +56,9 @@ class _SkillsScreenState extends State<SkillsScreen> {
       skillController.clear();
     });
 
+    // Autosave after adding a skill.
+    ResumeController.instance.scheduleAutosave();
+
     return true;
   }
 
@@ -70,6 +72,9 @@ class _SkillsScreenState extends State<SkillsScreen> {
     setState(() {
       skillsList.removeAt(index);
     });
+
+    // Autosave after deleting a skill.
+    ResumeController.instance.scheduleAutosave();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -87,6 +92,9 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 deletedSkill,
               );
             });
+
+            // Autosave the restored skill.
+            ResumeController.instance.scheduleAutosave();
           },
         ),
       ),
@@ -249,7 +257,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
@@ -277,7 +284,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
           ],
         ),
       ),
-
       body: Column(
         children: [
           // ======================================================
@@ -305,8 +311,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                         color: index <= 2
                             ? primaryColor
                             : Colors.grey.shade300,
-                        borderRadius:
-                            BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   );
@@ -367,22 +372,24 @@ class _SkillsScreenState extends State<SkillsScreen> {
                         color: primaryColor,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 12),
-
                 SizedBox(
                   width: double.infinity,
                   height: 52,
                   child: ElevatedButton(
                     onPressed: skillsList.isEmpty
                         ? null
-                        : () {
+                        : () async {
+                            // Save immediately before continuing.
+                            await ResumeController.instance.saveNow();
+
+                            if (!context.mounted) return;
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -394,19 +401,15 @@ class _SkillsScreenState extends State<SkillsScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       foregroundColor: Colors.white,
-                      disabledBackgroundColor:
-                          Colors.grey.shade300,
-                      disabledForegroundColor:
-                          Colors.grey.shade600,
+                      disabledBackgroundColor: Colors.grey.shade300,
+                      disabledForegroundColor: Colors.grey.shade600,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: const Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Save & Continue',
@@ -456,9 +459,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 color: primaryColor,
               ),
             ),
-
             const SizedBox(height: 24),
-
             const Text(
               'Showcase your skills',
               textAlign: TextAlign.center,
@@ -467,9 +468,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               'Add technical and professional skills '
               'that you want employers to notice on your resume.',
@@ -480,9 +479,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 fontSize: 14,
               ),
             ),
-
             const SizedBox(height: 28),
-
             ElevatedButton.icon(
               onPressed: _showAddSkillDialog,
               icon: const Icon(Icons.add),
@@ -501,8 +498,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 ),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14),
                 ),
               ),
             ),
@@ -525,8 +521,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
         20,
       ),
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ======================================================
           // HEADER CARD
@@ -537,8 +532,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius:
-                  BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(18),
               border: Border.all(
                 color: Colors.grey.shade200,
               ),
@@ -556,10 +550,8 @@ class _SkillsScreenState extends State<SkillsScreen> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color:
-                        primaryColor.withValues(alpha: 0.1),
-                    borderRadius:
-                        BorderRadius.circular(14),
+                    color: primaryColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Icon(
                     Icons.code_outlined,
@@ -567,13 +559,10 @@ class _SkillsScreenState extends State<SkillsScreen> {
                     size: 26,
                   ),
                 ),
-
                 const SizedBox(width: 14),
-
                 Expanded(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
                         'Your Skills',
@@ -594,18 +583,14 @@ class _SkillsScreenState extends State<SkillsScreen> {
                     ],
                   ),
                 ),
-
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 7,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        primaryColor.withValues(alpha: 0.1),
-                    borderRadius:
-                        BorderRadius.circular(20),
+                    color: primaryColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     '${skillsList.length}',
@@ -645,28 +630,23 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 return Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius:
-                        BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: Colors.grey.shade200,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            Colors.black.withValues(alpha: 0.025),
+                        color: Colors.black.withValues(alpha: 0.025),
                         blurRadius: 6,
-                        offset:
-                            const Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
                   child: Chip(
                     backgroundColor: Colors.white,
-                    surfaceTintColor:
-                        Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
                     side: BorderSide.none,
-                    padding:
-                        const EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 5,
                       vertical: 7,
                     ),
@@ -674,8 +654,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                       width: 24,
                       height: 24,
                       decoration: BoxDecoration(
-                        color:
-                            primaryColor.withValues(alpha: 0.1),
+                        color: primaryColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -687,8 +666,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                     label: Text(
                       skillsList[index],
                       style: const TextStyle(
-                        fontWeight:
-                            FontWeight.w600,
+                        fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
                     ),
@@ -716,27 +694,21 @@ class _SkillsScreenState extends State<SkillsScreen> {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color:
-                  Colors.amber.withValues(alpha: 0.08),
-              borderRadius:
-                  BorderRadius.circular(14),
+              color: Colors.amber.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color:
-                    Colors.amber.withValues(alpha: 0.2),
+                color: Colors.amber.withValues(alpha: 0.2),
               ),
             ),
             child: Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
                   Icons.lightbulb_outline,
                   color: Colors.amber.shade800,
                   size: 22,
                 ),
-
                 const SizedBox(width: 12),
-
                 Expanded(
                   child: Text(
                     'Tip: Add skills that match the jobs '

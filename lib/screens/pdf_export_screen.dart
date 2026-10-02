@@ -5,8 +5,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../controllers/resume_controller.dart';
 import '../models/resume.dart';
-import '../models/resume_controller.dart';
 
 class PdfExportScreen extends StatelessWidget {
   final int templateIndex;
@@ -160,9 +160,7 @@ class PdfExportScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      personal.name.isEmpty
-                          ? 'Your Name'
-                          : personal.name,
+                      personal.name.isEmpty ? 'Your Name' : personal.name,
                       style: const TextStyle(
                         color: textColor,
                         fontSize: 17,
@@ -171,9 +169,7 @@ class PdfExportScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      personal.jobTitle.isEmpty
-                          ? 'Resume'
-                          : personal.jobTitle,
+                      personal.jobTitle.isEmpty ? 'Resume' : personal.jobTitle,
                       style: const TextStyle(
                         color: secondaryTextColor,
                         fontSize: 12,
@@ -451,7 +447,6 @@ class PdfExportScreen extends StatelessWidget {
           return [
             _pdfHeader(personal),
             _pdfContact(personal),
-
             if (personal.summary.isNotEmpty) ...[
               _pdfSectionTitle(
                 templateIndex == 1
@@ -470,7 +465,6 @@ class PdfExportScreen extends StatelessWidget {
                 ),
               ),
             ],
-
             _pdfEducation(resume),
             _pdfExperience(resume),
             _pdfProjects(resume),
@@ -500,13 +494,10 @@ class PdfExportScreen extends StatelessWidget {
           borderRadius: pw.BorderRadius.circular(6),
         ),
         child: pw.Column(
-          crossAxisAlignment:
-              pw.CrossAxisAlignment.start,
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
             pw.Text(
-              personal.name.isEmpty
-                  ? 'Your Name'
-                  : personal.name,
+              personal.name.isEmpty ? 'Your Name' : personal.name,
               style: const pw.TextStyle(
                 color: PdfColors.white,
                 fontSize: 24,
@@ -537,13 +528,10 @@ class PdfExportScreen extends StatelessWidget {
         padding: const pw.EdgeInsets.all(18),
         color: PdfColors.indigo900,
         child: pw.Column(
-          crossAxisAlignment:
-              pw.CrossAxisAlignment.start,
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
             pw.Text(
-              personal.name.isEmpty
-                  ? 'YOUR NAME'
-                  : personal.name.toUpperCase(),
+              personal.name.isEmpty ? 'YOUR NAME' : personal.name.toUpperCase(),
               style: const pw.TextStyle(
                 color: PdfColors.white,
                 fontSize: 23,
@@ -569,18 +557,14 @@ class PdfExportScreen extends StatelessWidget {
     }
 
     return pw.Column(
-      crossAxisAlignment:
-          pw.CrossAxisAlignment.start,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         pw.Text(
-          personal.name.isEmpty
-              ? 'Your Name'
-              : personal.name,
+          personal.name.isEmpty ? 'Your Name' : personal.name,
           style: pw.TextStyle(
             fontSize: templateIndex == 3 ? 27 : 25,
-            fontWeight: templateIndex == 3
-                ? pw.FontWeight.normal
-                : pw.FontWeight.bold,
+            fontWeight:
+                templateIndex == 3 ? pw.FontWeight.normal : pw.FontWeight.bold,
           ),
         ),
         if (personal.jobTitle.isNotEmpty)
@@ -671,8 +655,7 @@ class PdfExportScreen extends StatelessWidget {
         bottom: 7,
       ),
       child: pw.Column(
-        crossAxisAlignment:
-            pw.CrossAxisAlignment.start,
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Text(
             title,
@@ -706,8 +689,7 @@ class PdfExportScreen extends StatelessWidget {
     }
 
     return pw.Column(
-      crossAxisAlignment:
-          pw.CrossAxisAlignment.start,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         _pdfSectionTitle('EDUCATION'),
         ...resume.education.map(
@@ -716,8 +698,7 @@ class PdfExportScreen extends StatelessWidget {
               bottom: 10,
             ),
             child: pw.Column(
-              crossAxisAlignment:
-                  pw.CrossAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Text(
                   education.degree,
@@ -793,8 +774,7 @@ class PdfExportScreen extends StatelessWidget {
     }
 
     return pw.Column(
-      crossAxisAlignment:
-          pw.CrossAxisAlignment.start,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         _pdfSectionTitle('EXPERIENCE'),
         ...resume.experience.map(
@@ -803,8 +783,7 @@ class PdfExportScreen extends StatelessWidget {
               bottom: 10,
             ),
             child: pw.Column(
-              crossAxisAlignment:
-                  pw.CrossAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Text(
                   experience.jobTitle,
@@ -872,8 +851,7 @@ class PdfExportScreen extends StatelessWidget {
     }
 
     return pw.Column(
-      crossAxisAlignment:
-          pw.CrossAxisAlignment.start,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         _pdfSectionTitle('PROJECTS'),
         ...resume.projects.map(
@@ -882,8 +860,7 @@ class PdfExportScreen extends StatelessWidget {
               bottom: 10,
             ),
             child: pw.Column(
-              crossAxisAlignment:
-                  pw.CrossAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Text(
                   project.name,
@@ -951,8 +928,7 @@ class PdfExportScreen extends StatelessWidget {
     }
 
     return pw.Column(
-      crossAxisAlignment:
-          pw.CrossAxisAlignment.start,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         _pdfSectionTitle('SKILLS'),
         pw.Wrap(
@@ -967,8 +943,7 @@ class PdfExportScreen extends StatelessWidget {
                   ),
                   decoration: pw.BoxDecoration(
                     color: PdfColors.grey200,
-                    borderRadius:
-                        pw.BorderRadius.circular(3),
+                    borderRadius: pw.BorderRadius.circular(3),
                   ),
                   child: pw.Text(
                     skill,
@@ -996,8 +971,7 @@ class PdfExportScreen extends StatelessWidget {
     }
 
     return pw.Column(
-      crossAxisAlignment:
-          pw.CrossAxisAlignment.start,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         _pdfSectionTitle('CERTIFICATIONS'),
         ...resume.certifications.map(
@@ -1006,8 +980,7 @@ class PdfExportScreen extends StatelessWidget {
               bottom: 8,
             ),
             child: pw.Column(
-              crossAxisAlignment:
-                  pw.CrossAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Text(
                   certification.name,

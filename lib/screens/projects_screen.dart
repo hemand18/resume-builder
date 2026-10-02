@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/resume_controller.dart';
 import '../models/resume.dart';
-import '../models/resume_controller.dart';
+
 import 'certifications_screen.dart';
 
 class ProjectsScreen extends StatefulWidget {
@@ -66,8 +67,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             left: 20,
             right: 20,
             top: 10,
-            bottom:
-                MediaQuery.of(sheetContext).viewInsets.bottom + 20,
+            bottom: MediaQuery.of(sheetContext).viewInsets.bottom + 20,
           ),
           child: SingleChildScrollView(
             child: Form(
@@ -88,8 +88,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
-                        borderRadius:
-                            BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
@@ -104,23 +103,18 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         width: 46,
                         height: 46,
                         decoration: BoxDecoration(
-                          color:
-                              primaryColor.withValues(alpha: 0.1),
-                          borderRadius:
-                              BorderRadius.circular(14),
+                          color: primaryColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                         child: const Icon(
                           Icons.folder_outlined,
                           color: primaryColor,
                         ),
                       ),
-
                       const SizedBox(width: 12),
-
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               isEditing
@@ -138,14 +132,12 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                   : 'Showcase one of your best projects',
                               style: TextStyle(
                                 fontSize: 13,
-                                color:
-                                    Colors.grey.shade600,
+                                color: Colors.grey.shade600,
                               ),
                             ),
                           ],
                         ),
                       ),
-
                       IconButton(
                         onPressed: () {
                           Navigator.pop(sheetContext);
@@ -167,8 +159,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     hint: 'e.g. Movie Recommendation System',
                     icon: Icons.folder_outlined,
                     validator: (value) {
-                      if (value == null ||
-                          value.trim().isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return 'Please enter project name';
                       }
                       return null;
@@ -187,8 +178,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     hint: 'e.g. Python, Flutter, MySQL',
                     icon: Icons.code_outlined,
                     validator: (value) {
-                      if (value == null ||
-                          value.trim().isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return 'Please enter technologies';
                       }
                       return null;
@@ -210,8 +200,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     maxLines: 5,
                     alignLabelWithHint: true,
                     validator: (value) {
-                      if (value == null ||
-                          value.trim().isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return 'Please enter project description';
                       }
                       return null;
@@ -227,8 +216,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   _buildTextField(
                     controller: githubController,
                     label: 'GitHub URL',
-                    hint:
-                        'https://github.com/username/project',
+                    hint: 'https://github.com/username/project',
                     icon: Icons.code,
                     keyboardType: TextInputType.url,
                   ),
@@ -258,37 +246,30 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     height: 54,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (!formKey.currentState!
-                            .validate()) {
+                        if (!formKey.currentState!.validate()) {
                           return;
                         }
 
-                        final Project newProject =
-                            Project(
-                          name:
-                              nameController.text.trim(),
+                        final Project newProject = Project(
+                          name: nameController.text.trim(),
                           technologies:
-                              technologiesController
-                                  .text
-                                  .trim(),
+                              technologiesController.text.trim(),
                           description:
-                              descriptionController
-                                  .text
-                                  .trim(),
-                          githubUrl:
-                              githubController.text.trim(),
-                          liveUrl:
-                              liveUrlController.text.trim(),
+                              descriptionController.text.trim(),
+                          githubUrl: githubController.text.trim(),
+                          liveUrl: liveUrlController.text.trim(),
                         );
 
                         setState(() {
                           if (isEditing) {
-                            projectsList[editIndex] =
-                                newProject;
+                            projectsList[editIndex] = newProject;
                           } else {
                             projectsList.add(newProject);
                           }
                         });
+
+                        // Autosave after adding/updating a project.
+                        ResumeController.instance.scheduleAutosave();
 
                         Navigator.pop(sheetContext);
                       },
@@ -297,18 +278,14 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                       child: Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            isEditing
-                                ? Icons.check
-                                : Icons.add,
+                            isEditing ? Icons.check : Icons.add,
                             size: 20,
                           ),
                           const SizedBox(width: 8),
@@ -462,14 +439,16 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
               onPressed: () {
                 setState(() {
                   projectsList.removeAt(index);
                 });
+
+                // Autosave after deleting a project.
+                ResumeController.instance.scheduleAutosave();
 
                 Navigator.pop(dialogContext);
               },
@@ -548,8 +527,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         color: index <= 2
                             ? primaryColor
                             : Colors.grey.shade300,
-                        borderRadius:
-                            BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   );
@@ -583,8 +561,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color:
-                      Colors.black.withValues(alpha: 0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 15,
                   offset: const Offset(0, -4),
                 ),
@@ -611,8 +588,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         color: primaryColor,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                   ),
@@ -626,7 +602,12 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   child: ElevatedButton(
                     onPressed: projectsList.isEmpty
                         ? null
-                        : () {
+                        : () async {
+                            // Save immediately before continuing.
+                            await ResumeController.instance.saveNow();
+
+                            if (!context.mounted) return;
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -638,19 +619,15 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       foregroundColor: Colors.white,
-                      disabledBackgroundColor:
-                          Colors.grey.shade300,
-                      disabledForegroundColor:
-                          Colors.grey.shade600,
+                      disabledBackgroundColor: Colors.grey.shade300,
+                      disabledForegroundColor: Colors.grey.shade600,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: const Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Save & Continue',
@@ -691,8 +668,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color:
-                    primaryColor.withValues(alpha: 0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -701,9 +677,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 color: primaryColor,
               ),
             ),
-
             const SizedBox(height: 24),
-
             const Text(
               'Showcase your projects',
               textAlign: TextAlign.center,
@@ -712,11 +686,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
-              'Add your best projects with technologies, descriptions and links to your work.',
+              'Add your best projects with technologies, '
+              'descriptions and links to your work.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.grey.shade600,
@@ -724,9 +697,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 fontSize: 14,
               ),
             ),
-
             const SizedBox(height: 28),
-
             ElevatedButton.icon(
               onPressed: showProjectForm,
               icon: const Icon(Icons.add),
@@ -739,15 +710,13 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
                 foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 14,
                 ),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14),
                 ),
               ),
             ),
@@ -783,8 +752,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             ),
             boxShadow: [
               BoxShadow(
-                color:
-                    Colors.black.withValues(alpha: 0.035),
+                color: Colors.black.withValues(alpha: 0.035),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -793,25 +761,21 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           child: Padding(
             padding: const EdgeInsets.all(18),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // ==================================================
                 // TOP ROW
                 // ==================================================
 
                 Row(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color:
-                            primaryColor.withValues(alpha: 0.1),
-                        borderRadius:
-                            BorderRadius.circular(14),
+                        color: primaryColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       child: const Icon(
                         Icons.folder_outlined,
@@ -824,27 +788,22 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
                     Expanded(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             project.name,
                             style: const TextStyle(
                               fontSize: 18,
-                              fontWeight:
-                                  FontWeight.bold,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-
                           const SizedBox(height: 7),
-
                           Text(
                             project.technologies,
                             style: const TextStyle(
                               color: primaryColor,
                               fontSize: 13,
-                              fontWeight:
-                                  FontWeight.w600,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -858,13 +817,11 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                           showProjectForm(
                             editIndex: index,
                           );
-                        } else if (value ==
-                            'delete') {
+                        } else if (value == 'delete') {
                           deleteProject(index);
                         }
                       },
-                      itemBuilder: (context) =>
-                          const [
+                      itemBuilder: (context) => const [
                         PopupMenuItem<String>(
                           value: 'edit',
                           child: Row(
@@ -918,7 +875,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 if (project.githubUrl.isNotEmpty ||
                     project.liveUrl.isNotEmpty) ...[
                   const SizedBox(height: 15),
-
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,

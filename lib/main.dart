@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/personal_info_screen.dart';
+import 'screens/my_resumes_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -180,7 +179,7 @@ class ResumeBuilderApp extends StatelessWidget {
         ),
       ),
 
-      home: const PersonalInfoScreen(),
+      home: const MyResumesScreen(),
     );
   }
 }
