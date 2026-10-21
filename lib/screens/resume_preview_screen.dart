@@ -38,9 +38,7 @@ class ResumePreviewScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        iconTheme: const IconThemeData(
-          color: textColor,
-        ),
+        iconTheme: const IconThemeData(color: textColor),
         actions: [
           IconButton(
             tooltip: 'Print / Share',
@@ -53,17 +51,10 @@ class ResumePreviewScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(
-          16,
-          20,
-          16,
-          100,
-        ),
+        padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 850,
-            ),
+            constraints: const BoxConstraints(maxWidth: 850),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -77,12 +68,7 @@ class ResumePreviewScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(
-            16,
-            8,
-            16,
-            12,
-          ),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -107,9 +93,7 @@ class ResumePreviewScreen extends StatelessWidget {
               onPressed: () async {
                 await _printResume(resume);
               },
-              icon: const Icon(
-                Icons.picture_as_pdf_outlined,
-              ),
+              icon: const Icon(Icons.picture_as_pdf_outlined),
               label: const Text(
                 'Download / Print PDF',
                 style: TextStyle(
@@ -124,85 +108,51 @@ class ResumePreviewScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // PREVIEW HEADER
-  // ============================================================
-
   Widget _buildPreviewHeader() {
-    const templateNames = [
-      'Classic',
-      'Modern',
-      'Professional',
-      'Minimal',
-    ];
-
-    final int safeIndex = templateIndex.clamp(0, templateNames.length - 1);
-
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 14,
-      ),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
         children: [
           Container(
-            width: 42,
-            height: 42,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              color: Colors.indigo.shade50,
-              borderRadius: BorderRadius.circular(10),
+              color: primaryColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(14),
             ),
             child: const Icon(
               Icons.description_outlined,
-              color: Colors.indigo,
+              color: primaryColor,
+              size: 26,
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
+          const SizedBox(width: 14),
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Your Resume',
+                Text(
+                  'Your resume is ready',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
+                    color: textColor,
                   ),
                 ),
-                const SizedBox(height: 3),
+                SizedBox(height: 5),
                 Text(
-                  '${templateNames[safeIndex]} Template',
+                  'Review your details before exporting to PDF.',
                   style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
+                    fontSize: 13,
+                    color: secondaryTextColor,
                   ),
                 ),
               ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 6,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.green.shade50,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              'Ready',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Colors.green.shade700,
-              ),
             ),
           ),
         ],
@@ -210,34 +160,21 @@ class ResumePreviewScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // BUILD TEMPLATE
-  // ============================================================
-
   Widget _buildTemplate(Resume resume) {
     switch (templateIndex) {
       case 0:
         return _classicTemplate(resume);
-
       case 1:
         return _modernTemplate(resume);
-
       case 2:
         return _professionalTemplate(resume);
-
       case 3:
         return _minimalTemplate(resume);
-
       default:
         return _classicTemplate(resume);
     }
   }
-
-  // ============================================================
-  // CLASSIC TEMPLATE
-  // ============================================================
-
-  Widget _classicTemplate(Resume resume) {
+    Widget _classicTemplate(Resume resume) {
     final personal = resume.personalInfo;
 
     return _resumeContainer(
@@ -496,115 +433,86 @@ class ResumePreviewScreen extends StatelessWidget {
   }
 
   // ============================================================
-  // CONTACT
+  // CONTACT INFORMATION
   // ============================================================
 
   Widget _contactInfo(PersonalInfo personal) {
-    final contacts = <Widget>[];
+    final items = <Widget>[];
 
     if (personal.email.isNotEmpty) {
-      contacts.add(
+      items.add(
         _contactItem(
-          Icons.email_outlined,
-          personal.email,
+          icon: Icons.email_outlined,
+          text: personal.email,
         ),
       );
     }
 
     if (personal.phone.isNotEmpty) {
-      contacts.add(
+      items.add(
         _contactItem(
-          Icons.phone_outlined,
-          personal.phone,
+          icon: Icons.phone_outlined,
+          text: personal.phone,
         ),
       );
     }
 
     if (personal.location.isNotEmpty) {
-      contacts.add(
+      items.add(
         _contactItem(
-          Icons.location_on_outlined,
-          personal.location,
+          icon: Icons.location_on_outlined,
+          text: personal.location,
         ),
       );
     }
 
     if (personal.linkedin.isNotEmpty) {
-      contacts.add(
+      items.add(
         _contactItem(
-          Icons.link,
-          personal.linkedin,
+          icon: Icons.link,
+          text: personal.linkedin,
         ),
       );
     }
 
-    if (personal.github.isNotEmpty) {
-      contacts.add(
-        _contactItem(
-          Icons.code,
-          personal.github,
-        ),
-      );
-    }
-
-    if (personal.website.isNotEmpty) {
-      contacts.add(
-        _contactItem(
-          Icons.language,
-          personal.website,
-        ),
-      );
-    }
-
-    if (contacts.isEmpty) {
+    if (items.isEmpty) {
       return const SizedBox.shrink();
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-      ),
-      decoration: BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
-      ),
-      child: Wrap(
-        spacing: 16,
-        runSpacing: 9,
-        children: contacts,
-      ),
+    return Wrap(
+      spacing: 16,
+      runSpacing: 10,
+      children: items,
     );
   }
 
-  Widget _contactItem(
-    IconData icon,
-    String text,
-  ) {
+  Widget _contactItem({
+    required IconData icon,
+    required String text,
+  }) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
           size: 15,
-          color: Colors.indigo.shade700,
+          color: secondaryTextColor,
         ),
         const SizedBox(width: 5),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 11,
-            color: Colors.grey.shade700,
+        Flexible(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 11,
+              color: secondaryTextColor,
+            ),
           ),
         ),
       ],
     );
   }
-
-  // ============================================================
-  // SECTION
+    // ============================================================
+  // SECTION HEADING
   // ============================================================
 
   Widget _section(String title) {
@@ -652,9 +560,7 @@ class ResumePreviewScreen extends StatelessWidget {
         _section('EDUCATION'),
         ...resume.education.map(
           (education) => Padding(
-            padding: const EdgeInsets.only(
-              bottom: 15,
-            ),
+            padding: const EdgeInsets.only(bottom: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -705,9 +611,7 @@ class ResumePreviewScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       education.description,
-                      style: const TextStyle(
-                        height: 1.4,
-                      ),
+                      style: const TextStyle(height: 1.4),
                     ),
                   ),
               ],
@@ -733,9 +637,7 @@ class ResumePreviewScreen extends StatelessWidget {
         _section('EXPERIENCE'),
         ...resume.experience.map(
           (experience) => Padding(
-            padding: const EdgeInsets.only(
-              bottom: 15,
-            ),
+            padding: const EdgeInsets.only(bottom: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -761,12 +663,11 @@ class ResumePreviewScreen extends StatelessWidget {
                     ),
                   ),
                 Text(
-                  experience.isCurrent
-                      ? '${experience.startDate} - Present'
-                      : _dateRange(
-                          experience.startDate,
-                          experience.endDate,
-                        ),
+                  _experienceDateRange(
+                    start: experience.startDate,
+                    end: experience.endDate,
+                    isCurrent: experience.isCurrent,
+                  ),
                   style: TextStyle(
                     color: Colors.grey.shade600,
                   ),
@@ -776,9 +677,7 @@ class ResumePreviewScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       experience.description,
-                      style: const TextStyle(
-                        height: 1.4,
-                      ),
+                      style: const TextStyle(height: 1.4),
                     ),
                   ),
               ],
@@ -804,9 +703,7 @@ class ResumePreviewScreen extends StatelessWidget {
         _section('PROJECTS'),
         ...resume.projects.map(
           (project) => Padding(
-            padding: const EdgeInsets.only(
-              bottom: 15,
-            ),
+            padding: const EdgeInsets.only(bottom: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -833,9 +730,7 @@ class ResumePreviewScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       project.description,
-                      style: const TextStyle(
-                        height: 1.4,
-                      ),
+                      style: const TextStyle(height: 1.4),
                     ),
                   ),
                 if (project.githubUrl.isNotEmpty)
@@ -929,9 +824,7 @@ class ResumePreviewScreen extends StatelessWidget {
         _section('CERTIFICATIONS'),
         ...resume.certifications.map(
           (certification) => Padding(
-            padding: const EdgeInsets.only(
-              bottom: 12,
-            ),
+            padding: const EdgeInsets.only(bottom: 12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -952,9 +845,7 @@ class ResumePreviewScreen extends StatelessWidget {
                         ),
                       ),
                       if (certification.organization.isNotEmpty)
-                        Text(
-                          certification.organization,
-                        ),
+                        Text(certification.organization),
                       if (certification.date.isNotEmpty)
                         Text(
                           certification.date,
@@ -965,9 +856,7 @@ class ResumePreviewScreen extends StatelessWidget {
                       if (certification.credentialId.isNotEmpty)
                         Text(
                           'Credential ID: ${certification.credentialId}',
-                          style: const TextStyle(
-                            fontSize: 11,
-                          ),
+                          style: const TextStyle(fontSize: 11),
                         ),
                       if (certification.url.isNotEmpty)
                         Text(
@@ -989,809 +878,318 @@ class ResumePreviewScreen extends StatelessWidget {
   }
 
   // ============================================================
-  // DATE RANGE
+  // DATE RANGE HELPERS
   // ============================================================
 
-  String _dateRange(
-    String start,
-    String end,
-  ) {
-    if (start.isNotEmpty && end.isNotEmpty) {
-      return '$start - $end';
+  String _dateRange(String start, String end) {
+    final startDate = start.trim();
+    final endDate = end.trim();
+
+    if (startDate.isNotEmpty && endDate.isNotEmpty) {
+      return '$startDate - $endDate';
     }
 
-    if (start.isNotEmpty) {
-      return start;
+    if (startDate.isNotEmpty) {
+      return startDate;
     }
 
-    return end;
+    if (endDate.isNotEmpty) {
+      return endDate;
+    }
+
+    return '';
   }
 
-  // ============================================================
-  // PRINT / PDF
+  String _experienceDateRange({
+    required String start,
+    required String end,
+    required bool isCurrent,
+  }) {
+    final startDate = start.trim();
+    final endDate = end.trim();
+
+    if (isCurrent) {
+      if (startDate.isEmpty) {
+        return 'Present';
+      }
+
+      return '$startDate - Present';
+    }
+
+    return _dateRange(startDate, endDate);
+  }
+    // ============================================================
+  // PRINT / PDF EXPORT
   // ============================================================
 
-  Future<void> _printResume(
-    Resume resume,
-  ) async {
+  Future<void> _printResume(Resume resume) async {
     await Printing.layoutPdf(
       onLayout: (PdfPageFormat format) async {
-        return await _generatePdf(resume);
+        return _generatePdf(resume);
       },
     );
   }
 
-  // ============================================================
-  // GENERATE PDF
-  // ============================================================
-
-  Future<Uint8List> _generatePdf(
-    Resume resume,
-  ) async {
+  Future<Uint8List> _generatePdf(Resume resume) async {
     final pdf = pw.Document();
+    final personal = resume.personalInfo;
+
+    final PdfColor accentColor;
 
     switch (templateIndex) {
-      case 0:
-        _addClassicPdf(pdf, resume);
-        break;
-
       case 1:
-        _addModernPdf(pdf, resume);
+        accentColor = PdfColors.blue700;
         break;
-
       case 2:
-        _addProfessionalPdf(pdf, resume);
+        accentColor = PdfColors.indigo900;
         break;
-
       case 3:
-        _addMinimalPdf(pdf, resume);
+        accentColor = PdfColors.grey800;
         break;
-
       default:
-        _addClassicPdf(pdf, resume);
+        accentColor = PdfColors.indigo;
     }
 
-    return pdf.save();
-  }
-
-  // ============================================================
-  // CLASSIC PDF
-  // ============================================================
-
-  void _addClassicPdf(
-    pw.Document pdf,
-    Resume resume,
-  ) {
-    final personal = resume.personalInfo;
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(40),
-        build: (context) => [
-          _classicPdfHeader(personal),
-          _pdfContact(personal),
-          if (personal.summary.isNotEmpty) ...[
-            _pdfSectionTitle('SUMMARY'),
-            pw.Text(
-              personal.summary,
-              style: const pw.TextStyle(
-                fontSize: 10,
-                lineSpacing: 2,
-              ),
+    pw.Widget heading(String text) {
+      return pw.Container(
+        width: double.infinity,
+        margin: const pw.EdgeInsets.only(top: 14, bottom: 7),
+        padding: const pw.EdgeInsets.only(bottom: 5),
+        decoration: pw.BoxDecoration(
+          border: pw.Border(
+            bottom: pw.BorderSide(
+              color: accentColor,
+              width: 1.2,
             ),
-          ],
-          _pdfEducation(resume),
-          _pdfExperience(resume),
-          _pdfProjects(resume),
-          _pdfSkills(resume),
-          _pdfCertifications(resume),
-        ],
-      ),
-    );
-  }
+          ),
+        ),
+        child: pw.Text(
+          text.toUpperCase(),
+          style: pw.TextStyle(
+            fontSize: 11,
+            fontWeight: pw.FontWeight.bold,
+            color: accentColor,
+          ),
+        ),
+      );
+    }
 
-  // ============================================================
-  // MODERN PDF
-  // ============================================================
-
-  void _addModernPdf(
-    pw.Document pdf,
-    Resume resume,
-  ) {
-    final personal = resume.personalInfo;
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(35),
-        build: (context) => [
-          _modernPdfHeader(personal),
-          _pdfContact(personal),
-          if (personal.summary.isNotEmpty) ...[
-            _pdfSectionTitle('PROFILE'),
-            pw.Text(
-              personal.summary,
-              style: const pw.TextStyle(
-                fontSize: 10,
-                lineSpacing: 2,
-              ),
-            ),
-          ],
-          _pdfEducation(resume),
-          _pdfExperience(resume),
-          _pdfProjects(resume),
-          _pdfSkills(resume),
-          _pdfCertifications(resume),
-        ],
-      ),
-    );
-  }
-
-  // ============================================================
-  // PROFESSIONAL PDF
-  // ============================================================
-
-  void _addProfessionalPdf(
-    pw.Document pdf,
-    Resume resume,
-  ) {
-    final personal = resume.personalInfo;
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(35),
-        build: (context) => [
-          _professionalPdfHeader(personal),
-          _pdfContact(personal),
-          if (personal.summary.isNotEmpty) ...[
-            _pdfSectionTitle(
-              'PROFESSIONAL SUMMARY',
-            ),
-            pw.Text(
-              personal.summary,
-              style: const pw.TextStyle(
-                fontSize: 10,
-                lineSpacing: 2,
-              ),
-            ),
-          ],
-          _pdfExperience(resume),
-          _pdfEducation(resume),
-          _pdfProjects(resume),
-          _pdfSkills(resume),
-          _pdfCertifications(resume),
-        ],
-      ),
-    );
-  }
-
-  // ============================================================
-  // MINIMAL PDF
-  // ============================================================
-
-  void _addMinimalPdf(
-    pw.Document pdf,
-    Resume resume,
-  ) {
-    final personal = resume.personalInfo;
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(45),
-        build: (context) => [
-          _minimalPdfHeader(personal),
-          _pdfContact(personal),
-          if (personal.summary.isNotEmpty) ...[
-            _pdfSectionTitle('ABOUT'),
-            pw.Text(
-              personal.summary,
-              style: const pw.TextStyle(
-                fontSize: 10,
-                lineSpacing: 2,
-              ),
-            ),
-          ],
-          _pdfEducation(resume),
-          _pdfExperience(resume),
-          _pdfProjects(resume),
-          _pdfSkills(resume),
-          _pdfCertifications(resume),
-        ],
-      ),
-    );
-  }
-
-  // ============================================================
-  // PDF HEADERS
-  // ============================================================
-
-  pw.Widget _classicPdfHeader(
-    PersonalInfo personal,
-  ) {
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        pw.Text(
-          personal.name.isEmpty ? 'Your Name' : personal.name,
+    pw.Widget bodyText(String text) {
+      return pw.Padding(
+        padding: const pw.EdgeInsets.only(bottom: 5),
+        child: pw.Text(
+          text,
           style: const pw.TextStyle(
-            fontSize: 26,
+            fontSize: 9,
+            lineSpacing: 2,
+          ),
+        ),
+      );
+    }
+
+    pw.Widget entryTitle(String text) {
+      return pw.Padding(
+        padding: const pw.EdgeInsets.only(top: 5, bottom: 3),
+        child: pw.Text(
+          text,
+          style: const pw.TextStyle(
+            fontSize: 10,
             fontWeight: pw.FontWeight.bold,
           ),
         ),
-        if (personal.jobTitle.isNotEmpty)
-          pw.Padding(
-            padding: const pw.EdgeInsets.only(
-              top: 5,
-            ),
-            child: pw.Text(
-              personal.jobTitle,
-              style: const pw.TextStyle(
-                fontSize: 12,
-                color: PdfColors.grey700,
+      );
+    }
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(38),
+        build: (context) {
+          final widgets = <pw.Widget>[];
+
+          // Name and professional title.
+          widgets.add(
+            pw.Text(
+              personal.name.isEmpty ? 'Your Name' : personal.name,
+              style: pw.TextStyle(
+                fontSize: 25,
+                fontWeight: pw.FontWeight.bold,
+                color: accentColor,
               ),
             ),
-          ),
-        pw.SizedBox(height: 8),
-        pw.Divider(),
-      ],
-    );
-  }
+          );
 
-  pw.Widget _modernPdfHeader(
-    PersonalInfo personal,
-  ) {
-    return pw.Container(
-      width: double.infinity,
-      padding: const pw.EdgeInsets.all(20),
-      decoration: pw.BoxDecoration(
-        color: PdfColors.blue700,
-        borderRadius: pw.BorderRadius.circular(6),
-      ),
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(
-            personal.name.isEmpty ? 'Your Name' : personal.name,
-            style: const pw.TextStyle(
-              color: PdfColors.white,
-              fontSize: 25,
-              fontWeight: pw.FontWeight.bold,
-            ),
-          ),
-          if (personal.jobTitle.isNotEmpty)
-            pw.Padding(
-              padding: const pw.EdgeInsets.only(
-                top: 5,
-              ),
-              child: pw.Text(
-                personal.jobTitle,
-                style: const pw.TextStyle(
-                  color: PdfColors.white,
-                  fontSize: 12,
+          if (personal.jobTitle.isNotEmpty) {
+            widgets.add(
+              pw.Padding(
+                padding: const pw.EdgeInsets.only(top: 4),
+                child: pw.Text(
+                  personal.jobTitle,
+                  style: const pw.TextStyle(fontSize: 12),
                 ),
               ),
-            ),
-        ],
-      ),
-    );
-  }
+            );
+          }
 
-  pw.Widget _professionalPdfHeader(
-    PersonalInfo personal,
-  ) {
-    return pw.Container(
-      width: double.infinity,
-      padding: const pw.EdgeInsets.all(20),
-      color: PdfColors.indigo900,
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(
-            personal.name.isEmpty ? 'YOUR NAME' : personal.name.toUpperCase(),
-            style: const pw.TextStyle(
-              color: PdfColors.white,
-              fontSize: 23,
-              fontWeight: pw.FontWeight.bold,
-              letterSpacing: 0.5,
-            ),
-          ),
-          if (personal.jobTitle.isNotEmpty)
-            pw.Padding(
-              padding: const pw.EdgeInsets.only(
-                top: 5,
-              ),
-              child: pw.Text(
-                personal.jobTitle,
-                style: const pw.TextStyle(
-                  color: PdfColors.white,
-                  fontSize: 11,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
+          // Contact details.
+          final contacts = <String>[
+            if (personal.email.isNotEmpty) personal.email,
+            if (personal.phone.isNotEmpty) personal.phone,
+            if (personal.location.isNotEmpty) personal.location,
+            if (personal.linkedin.isNotEmpty) personal.linkedin,
+          ];
 
-  pw.Widget _minimalPdfHeader(
-    PersonalInfo personal,
-  ) {
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        pw.Text(
-          personal.name.isEmpty ? 'Your Name' : personal.name,
-          style: const pw.TextStyle(
-            fontSize: 28,
-            fontWeight: pw.FontWeight.normal,
-          ),
-        ),
-        if (personal.jobTitle.isNotEmpty)
-          pw.Padding(
-            padding: const pw.EdgeInsets.only(
-              top: 5,
-            ),
-            child: pw.Text(
-              personal.jobTitle,
-              style: const pw.TextStyle(
-                fontSize: 11,
-                color: PdfColors.grey700,
-              ),
-            ),
-          ),
-        pw.SizedBox(height: 8),
-        pw.Container(
-          width: 45,
-          height: 1,
-          color: PdfColors.black,
-        ),
-      ],
-    );
-  }
-
-  // ============================================================
-  // PDF CONTACT
-  // ============================================================
-
-  pw.Widget _pdfContact(
-    PersonalInfo personal,
-  ) {
-    final List<String> contacts = [];
-
-    if (personal.email.isNotEmpty) {
-      contacts.add(personal.email);
-    }
-
-    if (personal.phone.isNotEmpty) {
-      contacts.add(personal.phone);
-    }
-
-    if (personal.location.isNotEmpty) {
-      contacts.add(personal.location);
-    }
-
-    if (personal.linkedin.isNotEmpty) {
-      contacts.add(personal.linkedin);
-    }
-
-    if (personal.github.isNotEmpty) {
-      contacts.add(personal.github);
-    }
-
-    if (personal.website.isNotEmpty) {
-      contacts.add(personal.website);
-    }
-
-    if (contacts.isEmpty) {
-      return pw.SizedBox();
-    }
-
-    return pw.Padding(
-      padding: const pw.EdgeInsets.only(
-        top: 10,
-      ),
-      child: pw.Wrap(
-        spacing: 10,
-        runSpacing: 5,
-        children: contacts
-            .map(
-              (contact) => pw.Text(
-                contact,
-                style: const pw.TextStyle(
-                  fontSize: 8,
-                  color: PdfColors.grey700,
-                ),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-
-  // ============================================================
-  // PDF SECTION TITLE
-  // ============================================================
-
-  pw.Widget _pdfSectionTitle(
-    String title,
-  ) {
-    return pw.Padding(
-      padding: const pw.EdgeInsets.only(
-        top: 18,
-        bottom: 7,
-      ),
-      child: pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(
-            title,
-            style: const pw.TextStyle(
-              fontSize: 12,
-              fontWeight: pw.FontWeight.bold,
-            ),
-          ),
-          pw.Container(
-            margin: const pw.EdgeInsets.only(
-              top: 3,
-            ),
-            width: 35,
-            height: 1.5,
-            color: PdfColors.black,
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ============================================================
-  // PDF EDUCATION
-  // ============================================================
-
-  pw.Widget _pdfEducation(
-    Resume resume,
-  ) {
-    if (resume.education.isEmpty) {
-      return pw.SizedBox();
-    }
-
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        _pdfSectionTitle('EDUCATION'),
-        ...resume.education.map(
-          (education) => pw.Padding(
-            padding: const pw.EdgeInsets.only(
-              bottom: 10,
-            ),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  education.degree,
-                  style: const pw.TextStyle(
-                    fontSize: 10,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.SizedBox(height: 2),
-                pw.Text(
-                  education.institution,
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                  ),
-                ),
-                if (education.location.isNotEmpty)
-                  pw.Text(
-                    education.location,
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                      color: PdfColors.grey700,
-                    ),
-                  ),
-                if (education.startYear.isNotEmpty ||
-                    education.endYear.isNotEmpty)
-                  pw.Text(
-                    _dateRange(
-                      education.startYear,
-                      education.endYear,
-                    ),
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                      color: PdfColors.grey700,
-                    ),
-                  ),
-                if (education.grade.isNotEmpty)
-                  pw.Text(
-                    education.grade,
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                  ),
-                if (education.description.isNotEmpty)
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.only(
-                      top: 3,
-                    ),
-                    child: pw.Text(
-                      education.description,
-                      style: const pw.TextStyle(
-                        fontSize: 8,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ============================================================
-  // PDF EXPERIENCE
-  // ============================================================
-
-  pw.Widget _pdfExperience(
-    Resume resume,
-  ) {
-    if (resume.experience.isEmpty) {
-      return pw.SizedBox();
-    }
-
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        _pdfSectionTitle('EXPERIENCE'),
-        ...resume.experience.map(
-          (experience) => pw.Padding(
-            padding: const pw.EdgeInsets.only(
-              bottom: 10,
-            ),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  experience.jobTitle,
-                  style: const pw.TextStyle(
-                    fontSize: 10,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.SizedBox(height: 2),
-                pw.Text(
-                  experience.company,
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                  ),
-                ),
-                if (experience.location.isNotEmpty)
-                  pw.Text(
-                    experience.location,
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                      color: PdfColors.grey700,
-                    ),
-                  ),
-                pw.Text(
-                  experience.isCurrent
-                      ? '${experience.startDate} - Present'
-                      : _dateRange(
-                          experience.startDate,
-                          experience.endDate,
-                        ),
+          if (contacts.isNotEmpty) {
+            widgets.add(
+              pw.Padding(
+                padding: const pw.EdgeInsets.only(top: 10),
+                child: pw.Text(
+                  contacts.join('  |  '),
                   style: const pw.TextStyle(
                     fontSize: 8,
                     color: PdfColors.grey700,
                   ),
                 ),
-                if (experience.description.isNotEmpty)
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.only(
-                      top: 3,
-                    ),
-                    child: pw.Text(
-                      experience.description,
-                      style: const pw.TextStyle(
-                        fontSize: 8,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+              ),
+            );
+          }
 
-  // ============================================================
-  // PDF PROJECTS
-  // ============================================================
+          // Summary.
+          if (personal.summary.trim().isNotEmpty) {
+            widgets.add(heading('Summary'));
+            widgets.add(bodyText(personal.summary));
+          }
 
-  pw.Widget _pdfProjects(
-    Resume resume,
-  ) {
-    if (resume.projects.isEmpty) {
-      return pw.SizedBox();
-    }
+          // Education.
+          if (resume.education.isNotEmpty) {
+            widgets.add(heading('Education'));
 
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        _pdfSectionTitle('PROJECTS'),
-        ...resume.projects.map(
-          (project) => pw.Padding(
-            padding: const pw.EdgeInsets.only(
-              bottom: 10,
-            ),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  project.name,
-                  style: const pw.TextStyle(
-                    fontSize: 10,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                if (project.technologies.isNotEmpty)
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.only(
-                      top: 2,
-                    ),
-                    child: pw.Text(
-                      project.technologies,
-                      style: const pw.TextStyle(
-                        fontSize: 8,
-                        fontWeight: pw.FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                if (project.description.isNotEmpty)
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.only(
-                      top: 3,
-                    ),
-                    child: pw.Text(
-                      project.description,
-                      style: const pw.TextStyle(
-                        fontSize: 8,
-                      ),
-                    ),
-                  ),
-                if (project.githubUrl.isNotEmpty)
-                  pw.Text(
-                    'GitHub: ${project.githubUrl}',
-                    style: const pw.TextStyle(
-                      fontSize: 7,
-                    ),
-                  ),
-                if (project.liveUrl.isNotEmpty)
-                  pw.Text(
-                    'Live Demo: ${project.liveUrl}',
-                    style: const pw.TextStyle(
-                      fontSize: 7,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+            for (final education in resume.education) {
+              widgets.add(entryTitle(education.degree));
 
-  // ============================================================
-  // PDF SKILLS
-  // ============================================================
+              if (education.institution.isNotEmpty) {
+                widgets.add(bodyText(education.institution));
+              }
 
-  pw.Widget _pdfSkills(
-    Resume resume,
-  ) {
-    if (resume.skills.isEmpty) {
-      return pw.SizedBox();
-    }
+              if (education.location.isNotEmpty) {
+                widgets.add(bodyText(education.location));
+              }
 
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        _pdfSectionTitle('SKILLS'),
-        pw.Wrap(
-          spacing: 6,
-          runSpacing: 5,
-          children: resume.skills
-              .map(
-                (skill) => pw.Container(
-                  padding: const pw.EdgeInsets.symmetric(
-                    horizontal: 7,
-                    vertical: 4,
-                  ),
-                  decoration: pw.BoxDecoration(
-                    color: PdfColors.grey200,
-                    borderRadius: pw.BorderRadius.circular(3),
-                  ),
-                  child: pw.Text(
-                    skill,
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                    ),
-                  ),
-                ),
-              )
-              .toList(),
-        ),
-      ],
-    );
-  }
+              final dates = _dateRange(
+                education.startYear,
+                education.endYear,
+              );
 
-  // ============================================================
-  // PDF CERTIFICATIONS
-  // ============================================================
+              if (dates.isNotEmpty) {
+                widgets.add(bodyText(dates));
+              }
 
-  pw.Widget _pdfCertifications(
-    Resume resume,
-  ) {
-    if (resume.certifications.isEmpty) {
-      return pw.SizedBox();
-    }
+              if (education.grade.isNotEmpty) {
+                widgets.add(bodyText(education.grade));
+              }
 
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        _pdfSectionTitle('CERTIFICATIONS'),
-        ...resume.certifications.map(
-          (certification) => pw.Padding(
-            padding: const pw.EdgeInsets.only(
-              bottom: 8,
-            ),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  certification.name,
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                if (certification.organization.isNotEmpty)
-                  pw.Text(
-                    certification.organization,
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                    ),
-                  ),
-                if (certification.date.isNotEmpty)
-                  pw.Text(
-                    certification.date,
-                    style: const pw.TextStyle(
-                      fontSize: 8,
-                      color: PdfColors.grey700,
-                    ),
-                  ),
-                if (certification.credentialId.isNotEmpty)
-                  pw.Text(
+              if (education.description.isNotEmpty) {
+                widgets.add(bodyText(education.description));
+              }
+            }
+          }
+
+          // Experience.
+          if (resume.experience.isNotEmpty) {
+            widgets.add(heading('Experience'));
+
+            for (final experience in resume.experience) {
+              widgets.add(entryTitle(experience.jobTitle));
+
+              if (experience.company.isNotEmpty) {
+                widgets.add(bodyText(experience.company));
+              }
+
+              if (experience.location.isNotEmpty) {
+                widgets.add(bodyText(experience.location));
+              }
+
+              final dates = _experienceDateRange(
+                start: experience.startDate,
+                end: experience.endDate,
+                isCurrent: experience.isCurrent,
+              );
+
+              if (dates.isNotEmpty) {
+                widgets.add(bodyText(dates));
+              }
+
+              if (experience.description.isNotEmpty) {
+                widgets.add(bodyText(experience.description));
+              }
+            }
+          }
+
+          // Projects.
+          if (resume.projects.isNotEmpty) {
+            widgets.add(heading('Projects'));
+
+            for (final project in resume.projects) {
+              widgets.add(entryTitle(project.name));
+
+              if (project.technologies.isNotEmpty) {
+                widgets.add(bodyText(project.technologies));
+              }
+
+              if (project.description.isNotEmpty) {
+                widgets.add(bodyText(project.description));
+              }
+
+              if (project.githubUrl.isNotEmpty) {
+                widgets.add(bodyText('GitHub: ${project.githubUrl}'));
+              }
+
+              if (project.liveUrl.isNotEmpty) {
+                widgets.add(bodyText('Live Demo: ${project.liveUrl}'));
+              }
+            }
+          }
+
+          // Skills.
+          if (resume.skills.isNotEmpty) {
+            widgets.add(heading('Skills'));
+            widgets.add(bodyText(resume.skills.join('  •  ')));
+          }
+
+          // Certifications.
+          if (resume.certifications.isNotEmpty) {
+            widgets.add(heading('Certifications'));
+
+            for (final certification in resume.certifications) {
+              widgets.add(entryTitle(certification.name));
+
+              if (certification.organization.isNotEmpty) {
+                widgets.add(bodyText(certification.organization));
+              }
+
+              if (certification.date.isNotEmpty) {
+                widgets.add(bodyText(certification.date));
+              }
+
+              if (certification.credentialId.isNotEmpty) {
+                widgets.add(
+                  bodyText(
                     'Credential ID: ${certification.credentialId}',
-                    style: const pw.TextStyle(
-                      fontSize: 7,
-                    ),
                   ),
-                if (certification.url.isNotEmpty)
-                  pw.Text(
-                    certification.url,
-                    style: const pw.TextStyle(
-                      fontSize: 7,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
+                );
+              }
+
+              if (certification.url.isNotEmpty) {
+                widgets.add(bodyText(certification.url));
+              }
+            }
+          }
+
+          return widgets;
+        },
+      ),
     );
+
+    return pdf.save();
   }
 }
